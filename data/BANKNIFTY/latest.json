@@ -1,0 +1,507 @@
+{
+  "timestamp": "2026-06-27T10:43:44.796454+05:30",
+  "symbol": "BANKNIFTY",
+  "spot": 58177.05,
+  "vix": 13.05,
+  "risk_free_rate": 0.067,
+  "key_levels": {
+    "gamma_max": 59573.3,
+    "delta_neutral": 57420.75,
+    "gamma_flip": 57910.42,
+    "gamma_neutral": 57910.42,
+    "vanna_neutral": 59758.24,
+    "spot": 58177.05,
+    "expiry_weighting": "1/sqrt(T) normalised",
+    "level_stats": {
+      "at_gamma_max": {
+        "ce_oi": 1169460,
+        "pe_oi": 45600,
+        "pc_ratio": 0.04,
+        "dominant_side": "CALL_HEAVY",
+        "total_oi": 1215060
+      },
+      "at_delta_neutral": {
+        "ce_oi": 857130,
+        "pe_oi": 1605030,
+        "pc_ratio": 1.87,
+        "dominant_side": "PUT_HEAVY",
+        "total_oi": 2462160
+      }
+    },
+    "front_expiry_gmax": 58060.7
+  },
+  "gamma_max_plays": [],
+  "delta_neutral_plays": [
+    {
+      "strategy": "Bull Put at DN",
+      "direction": "SELL",
+      "strike": 57400,
+      "option_type": "PE",
+      "expiry": "28-Jul-2026",
+      "ltp": 529.0,
+      "lots": 1,
+      "max_risk_inr": 39675.0,
+      "dte": 30,
+      "approx_delta": 0.3,
+      "distance_to_level": 1.3,
+      "conviction": "MEDIUM",
+      "premium_quality": "HIGH",
+      "rationale": "DN=57421 is 1.3% below spot. SELL PE 57400 (delta 0.30, DTE=30). WIN if NIFTY stays above 57400 at settlement."
+    }
+  ],
+  "gmax_distance_pct": 2.4,
+  "dn_distance_pct": 1.3,
+  "gmax_actionable": false,
+  "dn_actionable": true,
+  "regime": "NORMAL",
+  "prev_close": 58150.3515625,
+  "market_bias": "NEUTRAL",
+  "pin_trade": {
+    "available": false,
+    "reason": "Pin trade only valid on Thursday (BANKNIFTY expiry day)"
+  },
+  "gap_fade": {
+    "available": false,
+    "reason": "Gap too small (0.0%), need >0.8%"
+  },
+  "dn_strangle": {
+    "available": false,
+    "reason": "Spot 1.3% from Delta Neutral \u2014 not range-bound enough"
+  },
+  "gamma_profile": [
+    {
+      "price": 55849.97,
+      "gex": -156006844498405.53
+    },
+    {
+      "price": 55908.15,
+      "gex": -157760228239215.38
+    },
+    {
+      "price": 55966.32,
+      "gex": -159442043387194.3
+    },
+    {
+      "price": 56024.5,
+      "gex": -161031383818796.44
+    },
+    {
+      "price": 56082.68,
+      "gex": -162505438239274.53
+    },
+    {
+      "price": 56140.85,
+      "gex": -163839564612537.34
+    },
+    {
+      "price": 56199.03,
+      "gex": -165007391169861.12
+    },
+    {
+      "price": 56257.21,
+      "gex": -165980944222551.3
+    },
+    {
+      "price": 56315.39,
+      "gex": -166730803386046.53
+    },
+    {
+      "price": 56373.56,
+      "gex": -167226285094365.44
+    },
+    {
+      "price": 56431.74,
+      "gex": -167435655374394.28
+    },
+    {
+      "price": 56489.92,
+      "gex": -167326372721969.7
+    },
+    {
+      "price": 56548.09,
+      "gex": -166865361572858.53
+    },
+    {
+      "price": 56606.27,
+      "gex": -166019316319062.5
+    },
+    {
+      "price": 56664.45,
+      "gex": -164755035134838.03
+    },
+    {
+      "price": 56722.62,
+      "gex": -163039782110009.5
+    },
+    {
+      "price": 56780.8,
+      "gex": -160841675404031.28
+    },
+    {
+      "price": 56838.98,
+      "gex": -158130098385626.0
+    },
+    {
+      "price": 56897.16,
+      "gex": -154876130044501.8
+    },
+    {
+      "price": 58584.29,
+      "gex": 157785092067745.44
+    },
+    {
+      "price": 58642.47,
+      "gex": 169674284540828.4
+    },
+    {
+      "price": 58700.64,
+      "gex": 181001514323314.25
+    },
+    {
+      "price": 58758.82,
+      "gex": 191719942574499.84
+    },
+    {
+      "price": 58817.0,
+      "gex": 201788653462891.9
+    },
+    {
+      "price": 58875.18,
+      "gex": 211172760389062.3
+    },
+    {
+      "price": 58933.35,
+      "gex": 219843387801585.22
+    },
+    {
+      "price": 58991.53,
+      "gex": 227777543371447.62
+    },
+    {
+      "price": 59049.71,
+      "gex": 234957899455877.5
+    },
+    {
+      "price": 59107.88,
+      "gex": 241372505678538.72
+    },
+    {
+      "price": 59166.06,
+      "gex": 247014455910302.62
+    },
+    {
+      "price": 59224.24,
+      "gex": 251881532884107.75
+    },
+    {
+      "price": 59282.41,
+      "gex": 255975852154310.4
+    },
+    {
+      "price": 59340.59,
+      "gex": 259303524254282.25
+    },
+    {
+      "price": 59398.77,
+      "gex": 261874349947205.22
+    },
+    {
+      "price": 59456.95,
+      "gex": 263701558711050.94
+    },
+    {
+      "price": 59515.12,
+      "gex": 264801595408250.53
+    },
+    {
+      "price": 59573.3,
+      "gex": 265193954847382.34
+    },
+    {
+      "price": 59631.48,
+      "gex": 264901059027178.53
+    },
+    {
+      "price": 59689.65,
+      "gex": 263948167608450.12
+    },
+    {
+      "price": 59747.83,
+      "gex": 262363308874530.2
+    },
+    {
+      "price": 59806.01,
+      "gex": 260177216323539.34
+    },
+    {
+      "price": 59864.19,
+      "gex": 257423255201421.0
+    },
+    {
+      "price": 59922.36,
+      "gex": 254137323748870.28
+    },
+    {
+      "price": 59980.54,
+      "gex": 250357715616844.2
+    },
+    {
+      "price": 60038.72,
+      "gex": 246124932635409.8
+    },
+    {
+      "price": 60096.89,
+      "gex": 241481440659693.1
+    },
+    {
+      "price": 60155.07,
+      "gex": 236471365275624.56
+    },
+    {
+      "price": 60213.25,
+      "gex": 231140128413291.66
+    },
+    {
+      "price": 60271.42,
+      "gex": 225534031073847.84
+    },
+    {
+      "price": 60329.6,
+      "gex": 219699791138739.62
+    },
+    {
+      "price": 60387.78,
+      "gex": 213684048354013.38
+    },
+    {
+      "price": 60445.96,
+      "gex": 207532850885398.88
+    },
+    {
+      "price": 60504.13,
+      "gex": 201291139209545.4
+    },
+    {
+      "price": 60562.31,
+      "gex": 195002243504840.88
+    },
+    {
+      "price": 60620.49,
+      "gex": 188707410163827.56
+    },
+    {
+      "price": 60678.66,
+      "gex": 182445371662677.25
+    },
+    {
+      "price": 60736.84,
+      "gex": 176251971935231.06
+    },
+    {
+      "price": 60795.02,
+      "gex": 170159856787634.84
+    },
+    {
+      "price": 60853.2,
+      "gex": 164198235949841.84
+    },
+    {
+      "price": 60911.37,
+      "gex": 158392720289171.28
+    }
+  ],
+  "front_expiry_gmax": 58060.7,
+  "strategies": {
+    "all": {
+      "iron_condor": {
+        "available": true,
+        "strategy": "Iron Condor",
+        "type": "PREMIUM_SELL",
+        "legs": [
+          {
+            "action": "SELL",
+            "type": "CE",
+            "strike": 59600,
+            "ltp": 19.9,
+            "role": "Short Call at GMax"
+          },
+          {
+            "action": "BUY",
+            "type": "CE",
+            "strike": 60200,
+            "ltp": 6.25,
+            "role": "Long Call wing"
+          },
+          {
+            "action": "SELL",
+            "type": "PE",
+            "strike": 57900,
+            "ltp": 152.0,
+            "role": "Short Put at GNeutral"
+          },
+          {
+            "action": "BUY",
+            "type": "PE",
+            "strike": 57300,
+            "ltp": 53.0,
+            "role": "Long Put wing"
+          }
+        ],
+        "net_credit": 112.65,
+        "max_profit": 3380.0,
+        "max_loss": 14620.0,
+        "reward_to_risk": 0.23,
+        "breakeven_up": 59712.65,
+        "breakeven_down": 57787.35,
+        "profit_zone": "BANKNIFTY stays between 57787 and 59713",
+        "lots": 1,
+        "dte": 30,
+        "typical_win_rate": "70-80%",
+        "rationale": "Sell range between Gamma Neutral (57910) and Gamma Max (59573). MMs stabilise price in this zone. Collect Rs.113/unit net credit.",
+        "conviction": "HIGH",
+        "ideal_conditions": "VIX < 16, no major event in next 7 days, spot near centre of range"
+      },
+      "broken_wing_butterfly": {
+        "available": false,
+        "reason": "Missing premium data"
+      },
+      "credit_spread": {
+        "available": true,
+        "strategy": "Bear Call Spread",
+        "type": "PREMIUM_SELL",
+        "legs": [
+          {
+            "action": "SELL",
+            "type": "CE",
+            "strike": 59600,
+            "ltp": 19.9,
+            "role": "Short Call at GMax (59573)"
+          },
+          {
+            "action": "BUY",
+            "type": "CE",
+            "strike": 60200,
+            "ltp": 6.25,
+            "role": "Long Call protection"
+          }
+        ],
+        "net_credit": 13.65,
+        "max_profit": 409.0,
+        "max_loss": 17590.0,
+        "reward_to_risk": 0.02,
+        "lots": 1,
+        "dte": 30,
+        "typical_win_rate": "60-70%",
+        "rationale": "GMax (59573) acts as resistance. Sell call spread at/above GMax. Keep credit if BANKNIFTY stays below 59600.",
+        "conviction": "HIGH",
+        "ideal_conditions": "Clear directional bias, GEX level acting as confirmed S/R, DTE 5-10 days"
+      },
+      "calendar_spread": {
+        "available": false,
+        "reason": "GMax strike (59600) is 2.4% from spot \u2014 calendar works best when near ATM"
+      },
+      "expiry_butterfly": {
+        "available": false,
+        "reason": "Expiry butterfly only valid on Thursday (BANKNIFTY 0DTE expiry day)"
+      },
+      "iv_percentile_sell": {
+        "available": false,
+        "reason": "IV Rank 19 too low (need >40). Selling vol when cheap = bad edge."
+      }
+    },
+    "available": {
+      "iron_condor": {
+        "available": true,
+        "strategy": "Iron Condor",
+        "type": "PREMIUM_SELL",
+        "legs": [
+          {
+            "action": "SELL",
+            "type": "CE",
+            "strike": 59600,
+            "ltp": 19.9,
+            "role": "Short Call at GMax"
+          },
+          {
+            "action": "BUY",
+            "type": "CE",
+            "strike": 60200,
+            "ltp": 6.25,
+            "role": "Long Call wing"
+          },
+          {
+            "action": "SELL",
+            "type": "PE",
+            "strike": 57900,
+            "ltp": 152.0,
+            "role": "Short Put at GNeutral"
+          },
+          {
+            "action": "BUY",
+            "type": "PE",
+            "strike": 57300,
+            "ltp": 53.0,
+            "role": "Long Put wing"
+          }
+        ],
+        "net_credit": 112.65,
+        "max_profit": 3380.0,
+        "max_loss": 14620.0,
+        "reward_to_risk": 0.23,
+        "breakeven_up": 59712.65,
+        "breakeven_down": 57787.35,
+        "profit_zone": "BANKNIFTY stays between 57787 and 59713",
+        "lots": 1,
+        "dte": 30,
+        "typical_win_rate": "70-80%",
+        "rationale": "Sell range between Gamma Neutral (57910) and Gamma Max (59573). MMs stabilise price in this zone. Collect Rs.113/unit net credit.",
+        "conviction": "HIGH",
+        "ideal_conditions": "VIX < 16, no major event in next 7 days, spot near centre of range"
+      },
+      "credit_spread": {
+        "available": true,
+        "strategy": "Bear Call Spread",
+        "type": "PREMIUM_SELL",
+        "legs": [
+          {
+            "action": "SELL",
+            "type": "CE",
+            "strike": 59600,
+            "ltp": 19.9,
+            "role": "Short Call at GMax (59573)"
+          },
+          {
+            "action": "BUY",
+            "type": "CE",
+            "strike": 60200,
+            "ltp": 6.25,
+            "role": "Long Call protection"
+          }
+        ],
+        "net_credit": 13.65,
+        "max_profit": 409.0,
+        "max_loss": 17590.0,
+        "reward_to_risk": 0.02,
+        "lots": 1,
+        "dte": 30,
+        "typical_win_rate": "60-70%",
+        "rationale": "GMax (59573) acts as resistance. Sell call spread at/above GMax. Keep credit if BANKNIFTY stays below 59600.",
+        "conviction": "HIGH",
+        "ideal_conditions": "Clear directional bias, GEX level acting as confirmed S/R, DTE 5-10 days"
+      }
+    },
+    "count": 2
+  },
+  "gmax_skip_reason": "GMax (59573) is 2.4% away \u2014 too far for same-day move",
+  "vix_actionable": true,
+  "is_synthetic": false,
+  "history": [
+    {
+      "scan_date": "2026-06-27",
+      "spot": 58177.05,
+      "gamma_max": 59573.3,
+      "delta_neutral": 57420.75,
+      "gamma_neutral": 57910.42
+    }
+  ]
+}

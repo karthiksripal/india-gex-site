@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEX Learn — India Options</title>
+<link rel="stylesheet" href="./css/style.css">
+<style>
+.learn-section { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; margin-bottom:14px; overflow:hidden; }
+.learn-header { padding:16px 20px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; }
+.learn-header:hover { background:var(--bg-card-hover); }
+.learn-title { font-size:15px; font-weight:700; }
+.learn-body { padding:4px 20px 20px; border-top:1px solid var(--border); }
+.learn-body p { color:var(--text-muted); font-size:13px; line-height:1.75; margin:10px 0; }
+.learn-body h3 { font-size:13px; font-weight:700; margin:16px 0 6px; color:var(--text-primary); }
+.learn-body ul { color:var(--text-muted); font-size:13px; line-height:1.8; padding-left:20px; }
+.learn-body li { margin-bottom:4px; }
+.level-box { border-radius:8px; padding:12px 16px; margin:8px 0; }
+.level-gmax { background:rgba(34,197,94,.08);  border:1px solid rgba(34,197,94,.2); }
+.level-dn   { background:rgba(59,130,246,.08); border:1px solid rgba(59,130,246,.2); }
+.level-gn   { background:rgba(249,115,22,.08); border:1px solid rgba(249,115,22,.2); }
+.level-name { font-weight:700; font-size:13px; margin-bottom:4px; }
+.level-desc { color:var(--text-muted); font-size:13px; line-height:1.6; }
+.analogy-box { background:rgba(167,114,247,.08); border:1px solid rgba(167,114,247,.2); border-radius:8px; padding:12px 16px; margin:10px 0; font-size:13px; color:var(--text-muted); line-height:1.7; }
+.analogy-box strong { color:var(--purple); }
+.rule-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0; }
+@media(max-width:600px){ .rule-grid { grid-template-columns:1fr; } }
+.rule-card { background:var(--bg-primary); border-radius:8px; padding:12px 14px; }
+.rule-card .rule-title { font-size:12px; font-weight:700; margin-bottom:6px; }
+.rule-card .rule-body { font-size:12px; color:var(--text-muted); line-height:1.6; }
+.decision-table { width:100%; font-size:12px; margin:12px 0; }
+.decision-table th { background:var(--bg-input); padding:8px 12px; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.4px; color:var(--text-muted); }
+.decision-table td { padding:8px 12px; border-bottom:1px solid rgba(48,54,61,.4); }
+.decision-table tr:last-child td { border-bottom:none; }
+.stat-highlight { display:inline-block; font-size:22px; font-weight:700; font-family:var(--mono); margin-right:6px; }
+.warn-box { background:rgba(248,81,73,.07); border:1px solid rgba(248,81,73,.2); border-radius:8px; padding:12px 14px; margin:10px 0; font-size:13px; color:var(--text-muted); }
+</style>
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<div class="page">
+  <div class="section-header">
+    <span class="section-title">📚 Learn — How GEX Trading Works</span>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="learn-section" id="sec-0">
+    <div class="learn-header" onclick="toggle(0)">
+      <span class="learn-title">🏦 How This Tool Works (Plain English)</span>
+      <span id="chv-0">▾</span>
+    </div>
+    <div class="learn-body" id="bod-0" style="display:none">
+      <p><strong>One sentence:</strong> This tool calculates invisible price levels where Nifty is pulled toward or pushed away from, based on how market makers hedge their options books.</p>
+
+      <h3>Who are market makers?</h3>
+      <p>Market makers are professional firms that sell options to retail traders. When you buy a Nifty CE, someone (a market maker) sold it to you. To protect themselves, they hedge continuously — buying and selling the underlying as the market moves. This hedging creates invisible forces on the index.</p>
+
+      <div class="analogy-box">
+        <strong>The bouncer analogy:</strong> Nifty is in a room with a ceiling at GMax. Big players are like bouncers at a club — they keep selling near that ceiling level, just like a bouncer who won't let anyone past the velvet rope. You're on the bouncer's side when you sell at the ceiling. The ceiling doesn't physically stop anything, but the collective hedging pressure of all those market makers makes it very hard to break through.
+      </div>
+
+      <h3>The three key levels</h3>
+      <div class="level-box level-gmax">
+        <div class="level-name" style="color:#22c55e">🟢 Gamma Max (GMax)</div>
+        <div class="level-desc">The strike with the most total gamma × open interest. Nifty is magnetically attracted to GMax from 1–2% away (market makers delta-hedge toward it), but repelled AT the level (they sell every attempt to break through). Acts as a ceiling when above spot, a floor when below.</div>
+      </div>
+      <div class="level-box level-dn">
+        <div class="level-name" style="color:#3b82f6">🔵 Delta Neutral (DN)</div>
+        <div class="level-desc">Where market makers' total delta exposure is exactly zero. Below DN they are net long delta (buy dips = supportive). Above DN they are net short delta (sell rallies = resistive). The gravitational center on quiet days. Good for range-bound strategies.</div>
+      </div>
+      <div class="level-box level-gn">
+        <div class="level-name" style="color:#f97316">🟠 Gamma Neutral (GN)</div>
+        <div class="level-desc">Where total gamma flips from positive to negative. Above GN: market makers are long gamma — they dampen moves, big swings fade. Below GN: market makers are short gamma — they amplify moves, breakdowns accelerate. The regime boundary that tells you whether to fade or follow moves.</div>
+      </div>
+
+      <div class="analogy-box" style="margin-top:14px">
+        <strong>The safety net analogy:</strong> Think of Delta Neutral as a safety net stretched under a bouncing ball. The net bounces the ball back up when it falls toward it. Market makers collecting rent on that safety net — they keep buying when Nifty approaches DN from above, keeping it from falling further.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="learn-section" id="sec-1">
+    <div class="learn-header" onclick="toggle(1)">
+      <span class="learn-title">📋 How to Use Today's Plays</span>
+      <span id="chv-1">▾</span>
+    </div>
+    <div class="learn-body" id="bod-1" style="display:none">
+      <h3>Daily workflow</h3>
+      <div class="rule-grid">
+        <div class="rule-card"><div class="rule-title">9:00 AM</div><div class="rule-body">Check Telegram / dashboard for morning signal. Note GMax distance and direction.</div></div>
+        <div class="rule-card"><div class="rule-title">9:15–9:30 AM</div><div class="rule-body">Watch if Nifty is actually moving toward GMax. DO NOT enter blindly at open — wait for confirmation.</div></div>
+        <div class="rule-card"><div class="rule-title">Entry trigger</div><div class="rule-body">Enter when Nifty has moved 0.3%+ in the direction of GMax in the first 15 min, or on a confirmed bounce at DN/GN.</div></div>
+        <div class="rule-card"><div class="rule-title">Exit rules</div><div class="rule-body">SELL plays: target +50% decay, stop at +33% move against. BUY plays: target +100% double, stop at -50%.</div></div>
+      </div>
+
+      <h3>Entry price sweet spot</h3>
+      <table class="decision-table">
+        <thead><tr><th>Option price</th><th>Move needed to double</th><th>How often</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>₹50–₹100</td><td>0.8–1.5% Nifty move</td><td>40–50× per year</td><td style="color:#22c55e">✓ Target zone</td></tr>
+          <tr><td>₹100–₹150</td><td>1.5–2.5% move</td><td>15–20× per year</td><td style="color:#22c55e">✓ OK</td></tr>
+          <tr><td>₹150–₹250</td><td>2.5–3.5% move</td><td>4–8× per year</td><td style="color:#f59e0b">⚠ Harder</td></tr>
+          <tr><td>&gt;₹250</td><td>&gt;3.5% move</td><td>1–2× per year</td><td style="color:#f87149">✗ Avoid</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--text-muted)">Tool targets delta 0.20–0.30 options (₹50–₹150). These have the best math for intraday plays.</p>
+
+      <h3>GMax distance sweet spot</h3>
+      <table class="decision-table">
+        <thead><tr><th>Distance</th><th>Historical positive rate</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; 0.5% away</td><td style="color:#f87149">~4.5%</td><td style="color:var(--text-muted)">MMs are actively resisting — at the level already</td></tr>
+          <tr><td>0.5–0.8%</td><td style="color:#f59e0b">~28%</td><td style="color:var(--text-muted)">Transitional — approaching resistance</td></tr>
+          <tr><td>0.8–2.0%</td><td style="color:#22c55e">~43%</td><td style="color:var(--text-muted)">Sweet spot — being pulled toward GMax</td></tr>
+          <tr><td>&gt; 2.0%</td><td style="color:var(--text-muted)">Skipped</td><td style="color:var(--text-muted)">Too far for same-day GMax touch</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Hardy's +100% rule (for BUY plays)</h3>
+      <div class="analogy-box">
+        <strong>Rule 1:</strong> Put maximum 1% of capital on any single play.<br>
+        <strong>Rule 2:</strong> When the option doubles, sell HALF — you've recovered your full cost.<br>
+        <strong>Rule 3:</strong> Let the remaining half ride for free. It can go 200–300% more.<br>
+        <strong>Rule 4:</strong> Exit at -50% stop if it doesn't move.<br><br>
+        Hardy's exact words: "Sell enough to get your principal back, freeroll the rest."
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="learn-section" id="sec-2">
+    <div class="learn-header" onclick="toggle(2)">
+      <span class="learn-title">📊 Understanding the Backtest</span>
+      <span id="chv-2">▾</span>
+    </div>
+    <div class="learn-body" id="bod-2" style="display:none">
+      <h3>Methodology</h3>
+      <ul>
+        <li><strong>Entry:</strong> Next morning's open price (Day D+1 open) — the price you'd actually pay</li>
+        <li><strong>Exit (intraday):</strong> If bhavcopy high ≥ 2× entry → WIN. If low ≤ 0.5× entry → STOPPED OUT</li>
+        <li><strong>Exit (EOD):</strong> If neither triggered intraday, use EOD settlement price</li>
+        <li><strong>Slippage:</strong> 5% applied to both entry and exit to model bid-ask spread</li>
+        <li><strong>VIX filter:</strong> No plays on days with VIX outside [14, 30]</li>
+        <li><strong>Regime filter:</strong> SELL CE suppressed when spot &gt; GMax (breakout mode)</li>
+      </ul>
+
+      <p style="font-size:12px;color:var(--text-muted)">Why the old method was wrong: An option could go from ₹200 to ₹400 at 11am then settle back at ₹210 at EOD. The old backtest called it NEUTRAL (+5%). The current methodology counts it as a WIN because it doubled intraday.</p>
+
+      <h3>Result categories</h3>
+      <div class="rule-grid">
+        <div class="rule-card"><div class="rule-title" style="color:#22c55e">WIN</div><div class="rule-body">Option doubled (+100%) intraday. Sold half at +100%, let rest ride. Clean outcome.</div></div>
+        <div class="rule-card"><div class="rule-title" style="color:#3b82f6">NEUTRAL</div><div class="rule-body">Gained but didn't double (+1% to +99%). Time decay + small move. Good outcome if you were selling.</div></div>
+        <div class="rule-card"><div class="rule-title" style="color:var(--text-muted)">SCRATCH</div><div class="rule-body">Small loss (0% to -33%). Stopped out but limited damage. Acceptable.</div></div>
+        <div class="rule-card"><div class="rule-title" style="color:#f87149">LOSS</div><div class="rule-body">Hit full stop loss (-50%). After VIX + regime fixes: 0 catastrophic losses in 6-month backtest.</div></div>
+      </div>
+
+      <h3>Corrected 6-month results (Jun 2026)</h3>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin:12px 0;padding:16px;background:var(--bg-primary);border-radius:8px">
+        <div><span class="stat-highlight" style="color:#22c55e">53%</span><span style="font-size:12px;color:var(--text-muted)">W+N Rate</span></div>
+        <div><span class="stat-highlight">-3.5%</span><span style="font-size:12px;color:var(--text-muted)">Avg P&amp;L</span></div>
+        <div><span class="stat-highlight" style="color:#22c55e">0%</span><span style="font-size:12px;color:var(--text-muted)">Catastrophic losses</span></div>
+        <div><span class="stat-highlight">120</span><span style="font-size:12px;color:var(--text-muted)">Trading days</span></div>
+        <div><span class="stat-highlight">41</span><span style="font-size:12px;color:var(--text-muted)">Days gated by VIX</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted)">3 critical bugs were fixed (T-bug in gamma calc, inverted slippage, inflated WIN threshold). The old dashboard showed 70% W+N — that was wrong. 53% on valid-regime days is the honest number. Premium selling (Iron Condor / Strangle) beats premium buying: 65% of plays had NEUTRAL or SCRATCH outcomes, meaning sellers kept most of the premium.</p>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <div class="learn-section" id="sec-3">
+    <div class="learn-header" onclick="toggle(3)">
+      <span class="learn-title">🎯 Strategy Guide — When to Use Each</span>
+      <span id="chv-3">▾</span>
+    </div>
+    <div class="learn-body" id="bod-3" style="display:none">
+      <table class="decision-table">
+        <thead><tr><th>Condition</th><th>Strategy</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>GMax 0.8–2% away, direction confirmed</td><td style="color:#3b82f6">BUY CE/PE</td><td style="color:var(--text-muted)">Being pulled toward GMax — momentum play</td></tr>
+          <tr><td>GMax &gt;2% away, VIX 14–18</td><td style="color:#f59e0b">SELL premium (Iron Condor / Strangle)</td><td style="color:var(--text-muted)">Range-bound — collect theta. GEX defines safe range.</td></tr>
+          <tr><td>Thursday + spot within 1% of GMax</td><td style="color:#22c55e">Gamma Pin Trade (sell ATM straddle)</td><td style="color:var(--text-muted)">Weekly expiry pins to GMax — most reliable setup</td></tr>
+          <tr><td>VIX &gt; 18</td><td style="color:#a855f7">IV Rank Sell (Iron Fly at DN)</td><td style="color:var(--text-muted)">Elevated IV = expensive options. Sell at DN, collect premium, win on vol mean reversion (65–70% rate).</td></tr>
+          <tr><td>VIX &lt; 14</td><td style="color:#f87149">Sit out / very small size</td><td style="color:var(--text-muted)">Options cheap — buyers have poor math, sellers have thin edge</td></tr>
+          <tr><td>Spot &gt; GMax (breakout mode)</td><td style="color:#f87149">No SELL CE — wait for reset</td><td style="color:var(--text-muted)">MMs short gamma now — GMax flipped to support. Selling calls is dangerous.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="analogy-box" style="margin-top:12px">
+        <strong>The #1 rule:</strong> Never buy an option priced above ₹150 expecting it to double same day. The math requires a 3%+ Nifty move which happens 1–2× per year. Stick to ₹50–₹100 options where a 1% move does the job.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <div class="learn-section" id="sec-4">
+    <div class="learn-header" onclick="toggle(4)">
+      <span class="learn-title">⚠️ What This Tool Cannot Do</span>
+      <span id="chv-4">▾</span>
+    </div>
+    <div class="learn-body" id="bod-4" style="display:none">
+      <div class="warn-box">
+        <ul style="list-style:none;padding:0">
+          <li style="margin-bottom:10px">⏰ <strong>Uses yesterday's data</strong> — GEX levels are calculated from EOD bhavcopy. Intraday OI shifts can change levels meaningfully. Always verify direction at 9:15 AM before entering.</li>
+          <li style="margin-bottom:10px">👁 <strong>No intraday monitoring</strong> — You must watch for your exit conditions yourself (option doubling or hitting stop). This is not an algo — it generates the setup, you execute it.</li>
+          <li style="margin-bottom:10px">🏪 <strong>India F&amp;O is 90% retail</strong> — GEX theory assumes market-maker dominance. On index options (Nifty) this holds well. On individual stocks, MMs are less dominant — results are weaker.</li>
+          <li style="margin-bottom:10px">📅 <strong>Expect 5–15 WIN days per 6 months</strong> — Most days will be NEUTRAL or SCRATCH. That's fine if you follow the +100% / -50% rule — wins are big, losses are small.</li>
+          <li style="margin-bottom:10px">🚫 <strong>Not financial advice</strong> — Always use defined-risk structures (spreads, not naked options). Never risk more than 1% of capital per play. Options can expire worthless.</li>
+        </ul>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted)">Inspired by <strong>u/hardyrekshin</strong> (<a href="https://options.hardyrekshin.com" style="color:var(--blue)" target="_blank">options.hardyrekshin.com</a>) — same GEX approach adapted for India's Nifty market.</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="./js/utils.js"></script><script src="./js/api.js"></script><script src="./js/nav.js"></script>
+<script>
+function toggle(i) {
+  const body = document.getElementById('bod-'+i);
+  const chv  = document.getElementById('chv-'+i);
+  const open = body.style.display !== 'block';
+  body.style.display = open ? 'block' : 'none';
+  chv.textContent = open ? '▴' : '▾';
+}
+// Open first section by default
+document.addEventListener('DOMContentLoaded', () => { buildNav('learn'); toggle(0); });
+</script>
+</body>
+</html>

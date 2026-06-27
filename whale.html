@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Whale Watch — GEX</title>
+<link rel="stylesheet" href="./css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+.whale-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+@media(max-width:768px) { .whale-grid { grid-template-columns:1fr; } }
+.whale-section { background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:16px 18px; }
+.whale-title { font-size:13px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.pcr-bar-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:12px; }
+.pcr-bar-track { flex:1; height:8px; background:var(--bg-input); border-radius:4px; overflow:hidden; }
+.pcr-bar-fill  { height:100%; border-radius:4px; transition:width .3s; }
+.fii-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid rgba(48,54,61,.4); font-size:13px; }
+.fii-row:last-child { border-bottom:none; }
+.ctx-row { background:rgba(88,166,255,.04); border-top:1px solid rgba(48,54,61,.4); display:none; }
+.ctx-row.open { display:table-row; }
+.ctx-cell { padding:10px 12px; vertical-align:top; }
+.ctx-deal { background:var(--bg-card); border:1px solid var(--border); border-radius:6px;
+            padding:8px 12px; margin-bottom:6px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.ctx-entity { font-weight:700; color:var(--text-primary); font-size:13px; }
+.ctx-btn { background:none; border:1px solid var(--border); color:var(--text-muted);
+           padding:2px 7px; border-radius:4px; cursor:pointer; font-size:11px; }
+.ctx-btn:hover { color:var(--text-primary); border-color:var(--text-muted); }
+.oi-tab { background:var(--bg-input); border:1px solid var(--border); color:var(--text-muted);
+          padding:5px 14px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:600; }
+.oi-tab.active { background:var(--blue); color:#fff; border-color:var(--blue); }
+</style>
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<div class="page">
+  <div class="section-header">
+    <span class="section-title">🐋 Whale Watch</span>
+    <span style="font-size:12px;color:var(--text-muted)">Unusual OI, Max Pain, PCR, FII/DII flow</span>
+  </div>
+
+  <div class="whale-grid">
+
+    <!-- OI Spikes tabbed -->
+    <div class="whale-section" style="grid-column:span 2">
+      <div class="whale-title">🔴 Unusual OI Activity</div>
+      <div style="display:flex;gap:6px;margin-bottom:12px">
+        <button class="oi-tab active" onclick="switchOITab('index')" id="tab-index">📊 Index</button>
+        <button class="oi-tab" onclick="switchOITab('n50')" id="tab-n50">🏆 Nifty 50 Stocks</button>
+        <button class="oi-tab" onclick="switchOITab('other')" id="tab-other">📦 Other F&O</button>
+      </div>
+      <div id="oi-index"><div class="skeleton skel-line"></div><div class="skeleton skel-line"></div></div>
+      <div id="oi-n50" style="display:none"><div class="skeleton skel-line"></div><div class="skeleton skel-line"></div></div>
+      <div id="oi-other" style="display:none"><div class="skeleton skel-line"></div></div>
+    </div>
+
+    <!-- Max Pain -->
+    <div class="whale-section">
+      <div class="whale-title">🎯 Max Pain <span style="font-size:11px;color:var(--text-muted);font-weight:400">(NIFTY index options)</span></div>
+      <div style="position:relative;height:200px"><canvas id="maxpain-chart"></canvas></div>
+      <div id="maxpain-note" title="Max Pain is always computed for NIFTY (weekly expiry). Changing the OI tab above does not affect this chart." style="font-size:12px;color:var(--text-muted);margin-top:8px"></div>
+    </div>
+
+    <!-- PCR -->
+    <div class="whale-section">
+      <div class="whale-title">📊 Put/Call Ratio (PCR) <span style="font-size:11px;color:var(--text-muted);font-weight:400">(NIFTY index options)</span></div>
+      <div id="pcr-content"><div class="skeleton skel-line"></div></div>
+    </div>
+
+    <!-- FII/DII -->
+    <div class="whale-section">
+      <div class="whale-title">🏦 FII / DII Participant Flow</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">NSE discloses participant <em>category</em> (FII, DII, Retail, Pro) — individual trader names are not publicly available for options. For named bulk equity deals see MarketPulse → Insider Deals.</div>
+      <div id="fii-content"><div class="skeleton skel-line"></div><div class="skeleton skel-line"></div></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="./js/utils.js"></script><script src="./js/api.js"></script><script src="./js/nav.js"></script>
+<script>
+let _mpChart = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  buildNav('whale');
+  try {
+    const data = await API.getWhale();
+    renderOI(data.oi_spikes);
+    renderMaxPain(data.max_pain);
+    renderPCR(data.pcr);
+    renderFII(data.fii_dii);
+  } catch(e) {
+    ['oi-content','pcr-content','fii-content'].forEach(id => {
+      document.getElementById(id).innerHTML = noData('Data unavailable');
+    });
+  }
+});
+
+const NIFTY50 = new Set([
+  'RELIANCE','TCS','HDFCBANK','INFY','ICICIBANK','KOTAKBANK','HINDUNILVR',
+  'SBIN','BAJFINANCE','BHARTIARTL','AXISBANK','MARUTI','TATAMOTORS','WIPRO',
+  'SUNPHARMA','ULTRACEMCO','TECHM','POWERGRID','NTPC','ONGC','ADANIENT',
+  'ADANIPORTS','APOLLOHOSP','ASIANPAINT','BAJAJFINSV','BPCL','BRITANNIA',
+  'CIPLA','COALINDIA','DIVISLAB','DRREDDY','EICHERMOT','GRASIM','HCLTECH',
+  'HEROMOTOCO','HINDALCO','ITC','JSWSTEEL','LT','NESTLEIND','TITAN',
+  'TRENT','TATACONSUM','TATASTEEL','UPL','VEDL','ZOMATO','SHRIRAMFIN','BEL'
+]);
+const INDEX_SYMS = new Set(['NIFTY','BANKNIFTY','FINNIFTY','MIDCPNIFTY','NIFTYNXT50']);
+
+function switchOITab(which) {
+  ['index','n50','other'].forEach(function(k) {
+    document.getElementById('oi-' + k).style.display = (k === which) ? '' : 'none';
+    document.getElementById('tab-' + k).classList.toggle('active', k === which);
+  });
+}
+
+function renderOITable(elId, items, emptyMsg) {
+  const el = document.getElementById(elId);
+  if (!items || !items.length) { el.innerHTML = noData(emptyMsg); return; }
+  let rows = '';
+  items.slice(0, 20).forEach(function(s) {
+    const z   = +(s.z_score || s.zscore || 0);
+    const oi  = +(s.oi_change || s.oi_chg || 0);
+    const tp  = (s.option_type || s.type || '').toUpperCase();
+    const col = tp === 'PE' ? 'var(--red)' : 'var(--green)';
+    var exp = s.expiry || '—';
+    var expShort = exp.length > 7 ? exp.slice(5) : exp;
+    var dte = s.dte != null ? s.dte + 'd' : '—';
+    var dteCol = s.dte != null ? (s.dte <= 3 ? 'var(--red)' : s.dte <= 7 ? 'var(--amber)' : 'var(--text-muted)') : 'var(--text-muted)';
+    rows += '<tr>' +
+      '<td style="font-family:var(--mono);font-weight:600">' + (s.symbol || '—') + '</td>' +
+      '<td style="font-family:var(--mono)">' + fmt(s.strike) + '</td>' +
+      '<td><span style="color:' + col + ';font-weight:700">' + (tp || '—') + '</span></td>' +
+      '<td style="font-size:12px">' + expShort + '</td>' +
+      '<td style="font-size:12px;color:' + dteCol + '">' + dte + '</td>' +
+      '<td>' + fmtPct(Math.abs(oi)) + '</td>' +
+      '<td style="font-family:var(--mono)">' + (z > 0 ? '+' : '') + z.toFixed(2) + '</td>' +
+      '<td><button class="ctx-btn" onclick="toggleCtx(this,\''+s.symbol+'\')" title="Load bulk deal context">👤</button></td>' +
+      '</tr>' +
+      '<tr class="ctx-row" id="ctx-' + s.symbol + '-' + (s.strike||'') + '">' +
+      '<td class="ctx-cell" colspan="9" id="ctx-data-' + s.symbol + '">Loading…</td>' +
+      '</tr>';
+  });
+  el.innerHTML = '<div class="table-wrap"><table>' +
+    '<thead><tr><th>Symbol</th><th>Strike</th><th>Type</th><th>Expiry</th><th>DTE</th><th>OI Chg</th><th title="Z-Score: (today OI - 30d avg) / std dev. >2 = notable spike, >3 = extreme">Z-Score ⓘ</th><th title="Named entities from NSE bulk/block deal disclosures">Who 👤</th></tr></thead>' +
+    '<tbody>' + rows + '</tbody></table></div>';
+}
+
+function renderOI(data) {
+  if (!data || data.error || !Array.isArray(data)) {
+    ['oi-index','oi-n50','oi-other'].forEach(function(id) {
+      document.getElementById(id).innerHTML = noData((data && data.error) || 'OI data not available');
+    });
+    return;
+  }
+  const idx   = data.filter(function(s) { return INDEX_SYMS.has((s.symbol||'').toUpperCase()); });
+  const n50   = data.filter(function(s) { var sym=(s.symbol||'').toUpperCase(); return !INDEX_SYMS.has(sym) && NIFTY50.has(sym); });
+  const other = data.filter(function(s) { var sym=(s.symbol||'').toUpperCase(); return !INDEX_SYMS.has(sym) && !NIFTY50.has(sym); });
+
+  document.getElementById('tab-index').textContent = '📊 Index (' + idx.length + ')';
+  document.getElementById('tab-n50').textContent   = '🏆 Nifty 50 (' + n50.length + ')';
+  document.getElementById('tab-other').textContent = '📦 Other F&O (' + other.length + ')';
+
+  renderOITable('oi-index', idx,   'No unusual index OI detected');
+  renderOITable('oi-n50',   n50,   'No unusual OI for Nifty 50 stocks — click Refresh Whale Data');
+  renderOITable('oi-other', other, 'No unusual OI for other F&O stocks');
+}
+function renderMaxPain(data) {
+  const note = document.getElementById('maxpain-note');
+  const ctx = document.getElementById('maxpain-chart').getContext('2d');
+
+  if (!data || data.error) {
+    note.textContent = data?.error || 'Max pain data not available';
+    return;
+  }
+
+  // API returns: { max_pain, symbol, expiry, date, spot, distance_pct, pain_curve: [[strike, pain], ...] }
+  const mp = data.max_pain || data.max_pain_strike || data.strike;
+  const expiry = data.expiry || data.expiry_date || '';
+  const spot = data.spot;
+  const distPct = data.distance_pct;
+  if (mp) {
+    let noteText = `Max Pain: ${fmt(mp)}`;
+    if (expiry) noteText += ` · Expiry: ${expiry}`;
+    if (spot) noteText += ` · Spot: ${fmt(spot)}`;
+    if (distPct != null) noteText += ` · Distance: ${Number(distPct).toFixed(2)}%`;
+    note.textContent = noteText;
+  }
+
+  // API uses pain_curve: [[strike, pain], ...]; also accept strikes/pain_by_strike for flexibility
+  const rawCurve = data.pain_curve || data.strikes || data.pain_by_strike || [];
+  if (!rawCurve.length) {
+    note.textContent = (note.textContent || '') + ' (no strike-level data)';
+    return;
+  }
+
+  // Normalise to [{strike, pain}] — pain_curve entries are [strike, pain] arrays
+  const strikes = rawCurve.map(s => Array.isArray(s) ? { strike: s[0], pain: s[1] } : s);
+  const labels = strikes.map(s => s.strike || s[0]);
+  const values = strikes.map(s => s.pain || s.total_pain || s[1] || 0);
+  const minPain = Math.min(...values);
+  const mpIdx  = values.indexOf(minPain);
+
+  if (_mpChart) _mpChart.destroy();
+  _mpChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: labels.map((_, i) => i === mpIdx ? 'rgba(245,158,11,.8)' : 'rgba(88,166,255,.4)'),
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: c => 'Pain: ' + fmt(c.parsed.y) } } },
+      scales: {
+        x: { ticks: { color: '#8b949e', maxTicksLimit: 8 }, grid: { color: 'rgba(48,54,61,.4)' } },
+        y: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(48,54,61,.4)' } }
+      }
+    }
+  });
+}
+
+function renderPCR(data) {
+  const el = document.getElementById('pcr-content');
+  if (!data || data.error) { el.innerHTML = noData(data?.error || 'PCR data not available'); return; }
+
+  const pcr = data.pcr || data.put_call_ratio || data.overall_pcr;
+  const sentiment = pcr > 1.2 ? { label: 'Bearish (excess puts)', color: 'var(--red)' }
+                  : pcr < 0.8 ? { label: 'Bullish (excess calls)', color: 'var(--green)' }
+                  : { label: 'Neutral', color: 'var(--text-muted)' };
+
+  const byStrike = data.by_strike || data.pcr_by_strike || [];
+
+  el.innerHTML = `
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px">
+      <span style="font-size:28px;font-weight:700;font-family:var(--mono)">${pcr ? Number(pcr).toFixed(2) : '—'}</span>
+      <span style="font-size:13px;color:${sentiment.color}">${sentiment.label}</span>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px">PCR > 1 = more puts than calls = protective / bearish sentiment</div>
+    ${byStrike.slice(0,8).map(s => {
+      const r = Math.min(100, (s.pcr || s.ratio || 0) / 2 * 100);
+      const col = (s.pcr||0) > 1.2 ? 'var(--red)' : (s.pcr||0) < 0.8 ? 'var(--green)' : 'var(--blue)';
+      return `<div class="pcr-bar-row">
+        <span style="width:52px;font-family:var(--mono);font-size:11px">${fmt(s.strike||s[0])}</span>
+        <div class="pcr-bar-track"><div class="pcr-bar-fill" style="width:${r}%;background:${col}"></div></div>
+        <span style="width:34px;text-align:right;font-family:var(--mono)">${Number(s.pcr||s.ratio||0).toFixed(2)}</span>
+      </div>`;
+    }).join('')}`;
+}
+
+function renderFII(data) {
+  const el = document.getElementById('fii-content');
+  if (!data || data.error) { el.innerHTML = noData(data?.error || 'FII/DII data not available'); return; }
+
+  const rows = Array.isArray(data) ? data : (data.rows || data.data || []);
+  if (!rows.length) { el.innerHTML = noData('No FII/DII data'); return; }
+
+  el.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th>Participant</th><th>Date</th><th>Long OI</th><th>Short OI</th><th>Net</th></tr></thead>
+    <tbody>${rows.slice(0,12).map(r => {
+      const net = (r.net || r.net_oi || (r.long_oi||0) - (r.short_oi||0));
+      const col = net >= 0 ? 'var(--green)' : 'var(--red)';
+      return `<tr>
+        <td style="font-weight:600">${r.participant||r.client_type||'—'}</td>
+        <td style="font-size:12px;color:var(--text-muted)">${r.date||'—'}</td>
+        <td style="font-family:var(--mono)">${fmt(r.long_oi||r.long||0)}</td>
+        <td style="font-family:var(--mono)">${fmt(r.short_oi||r.short||0)}</td>
+        <td style="font-family:var(--mono);color:${col};font-weight:600">${net>=0?'+':''}${fmt(net)}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+var _ctxCache = {};
+
+function toggleCtx(btn, sym) {
+  var ctxRows = document.querySelectorAll('[id^="ctx-' + sym + '-"]');
+  var dataEl  = document.getElementById('ctx-data-' + sym);
+  if (!ctxRows.length || !dataEl) return;
+  var isOpen = ctxRows[0].classList.contains('open');
+  ctxRows.forEach(function(r) { r.classList.toggle('open', !isOpen); });
+  btn.textContent = isOpen ? '👤' : '✕';
+  if (!isOpen && !_ctxCache[sym]) {
+    dataEl.innerHTML = '<span style="color:var(--text-muted)">⏳ Fetching NSE bulk deal data…</span>';
+    fetch('/api/whale/context/' + sym)
+      .then(function(r) { return r.json(); })
+      .then(function(d) { _ctxCache[sym] = d; renderCtx(sym, d, dataEl); })
+      .catch(function(e) { dataEl.innerHTML = '<span style="color:var(--red)">Failed: ' + e.message + '</span>'; });
+  } else if (!isOpen && _ctxCache[sym]) {
+    renderCtx(sym, _ctxCache[sym], dataEl);
+  }
+}
+
+function renderCtx(sym, d, el) {
+  var deals = (d.bulk_deals || []).concat(d.block_deals || []);
+  if (!deals.length) {
+    el.innerHTML = '<div style="padding:4px 0;color:var(--text-muted);font-size:12px">'
+      + '<strong>No named bulk/block equity deals found for ' + sym + ' today.</strong><br>'
+      + 'NSE only discloses participant category (FII/DII/Retail) for options — '
+      + 'individual names are available only for equity bulk deals (>0.5% of shares in one day). '
+      + '</div>';
+    return;
+  }
+  var html = '<div style="color:var(--text-muted);font-size:11px;margin-bottom:8px">'
+    + '📋 Equity bulk/block deals today (SEBI-mandated named disclosures). '
+    + 'Cross-reference: BUY here + CE spike = bullish positioning. SELL + PE spike = bearish.'
+    + '</div>';
+  deals.forEach(function(b) {
+    var isBuy = (b.action || '').indexOf('BUY') >= 0;
+    var col   = isBuy ? 'var(--green)' : 'var(--red)';
+    var qty   = b.quantity ? (b.quantity >= 100000
+      ? (b.quantity/100000).toFixed(2) + 'L' : b.quantity.toLocaleString()) : '—';
+    var val   = (b.price && b.quantity) ? ' ≈ ₹' + ((b.price*b.quantity)/1e7).toFixed(1) + 'Cr' : '';
+    html += '<div class="ctx-deal">'
+      + '<span class="ctx-entity">' + (b.entity || 'Unknown') + '</span>'
+      + '<span style="color:' + col + ';font-weight:700">' + (isBuy ? '▲ BUY' : '▼ SELL')
+      + ' [' + (b.deal_type||'BULK') + ']</span>'
+      + '<span style="font-family:var(--mono)">' + qty + ' shares' + val + '</span>'
+      + (b.price ? '<span style="color:var(--text-muted)">@ ₹' + b.price + '</span>' : '')
+      + '<span style="color:var(--text-muted);font-size:11px">' + (b.date||'') + '</span>'
+      + '</div>';
+  });
+  el.innerHTML = html;
+}
+</script>
+</body></html>

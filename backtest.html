@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEX Backtest</title>
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<div class="page">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <div>
+      <span style="font-size:15px;font-weight:700">📊 </span>
+      <span id="bt-symbol-label" style="font-size:17px;font-weight:800;color:var(--blue)">NIFTY</span>
+      <span style="font-size:15px;font-weight:700"> Backtest</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="bt-ts" style="font-size:12px;color:var(--text-muted)"></span>
+      <button id="bt-run-btn" onclick="runBacktest()"
+        style="background:var(--bg-input);border:1px solid var(--border);color:var(--text-primary);
+               padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500">
+        🔄 Re-run (120 days)
+      </button>
+    </div>
+  </div>
+  <!-- Context bar: spot + key summary metrics -->
+  <div id="bt-context" style="display:flex;gap:16px;align-items:center;margin-bottom:14px;
+       font-size:12px;color:var(--text-muted);flex-wrap:wrap">
+    <span id="bt-spot-badge" style="display:none;background:var(--bg-input);border:1px solid var(--border);
+          border-radius:6px;padding:4px 10px;font-size:13px;font-weight:600;color:var(--text-primary)"></span>
+    <span id="bt-ctx-days"></span>
+    <span id="bt-ctx-plays"></span>
+    <span id="bt-ctx-wn"></span>
+    <span id="bt-ctx-method" style="font-style:italic;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+  </div>
+  <div id="bt-stats" class="stat-row"><div class="skeleton skel-line" style="width:400px;height:40px"></div></div>
+  <div class="filter-row" id="bt-filters"></div>
+  <div class="table-wrap"><table>
+    <thead><tr>
+      <th>Date</th><th>Strategy</th><th>Strike</th><th>Dir</th>
+      <th>Entry</th><th>Exit</th><th>P&amp;L</th><th>Outcome</th>
+    </tr></thead>
+    <tbody id="bt-tbody"><tr><td colspan="8"><div class="skeleton skel-line"></div></td></tr></tbody>
+  </table></div>
+</div>
+<script src="./js/utils.js"></script><script src="./js/api.js"></script><script src="./js/nav.js"></script>
+<script>
+let _allPlays = [], _filter = 'ALL';
+document.addEventListener('DOMContentLoaded', async () => {
+  buildNav('backtest');
+  try {
+    const data = await API.getBacktest();
+    _allPlays = (data.plays || []).filter(p => p.outcome && p.outcome !== 'PENDING');
+
+    // Symbol label
+    const sym = data.symbol || (data.summary && data.summary.symbol) || 'NIFTY';
+    var symEl = document.getElementById('bt-symbol-label');
+    if (symEl) symEl.textContent = sym;
+
+    // Timestamp
+    const ts = data.timestamp || data.run_date || '';
+    if (ts) { const el = document.getElementById('bt-ts'); if (el) el.textContent = 'Last run: ' + fmtTs(ts); }
+
+    // Context bar
+    const s = data.summary || {};
+    var dEl = document.getElementById('bt-ctx-days');
+    var pEl = document.getElementById('bt-ctx-plays');
+    var wEl = document.getElementById('bt-ctx-wn');
+    var mEl = document.getElementById('bt-ctx-method');
+    if (dEl && data.days_tested) dEl.textContent = data.days_tested + '-day window';
+    if (pEl) pEl.textContent = (_allPlays.length || s.total_plays || 0) + ' plays';
+    if (wEl) {
+      var wn = s.win_or_neutral_rate || (s.wins && s.settled ? Math.round((s.wins + (s.neutral||0))/s.settled*100) : 0);
+      wEl.innerHTML = 'W+N <strong style="color:var(--green)">' + Number(wn).toFixed(1) + '%</strong>';
+    }
+    if (mEl && s.methodology) mEl.textContent = s.methodology.slice(0, 120) + (s.methodology.length > 120 ? '…' : '');
+
+    // Fetch live spot for this symbol
+    fetch('/api/scan/' + sym)
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(scan) {
+        if (!scan || !scan.spot) return;
+        var badge = document.getElementById('bt-spot-badge');
+        if (!badge) return;
+        badge.style.display = '';
+        var spot = scan.spot;
+        var pc   = scan.prev_close;
+        var chgStr = '';
+        if (pc && spot) {
+          var chg = (spot - pc) / pc * 100;
+          var col = chg >= 0 ? 'var(--green)' : 'var(--red)';
+          chgStr = ' <span style="color:' + col + ';font-weight:400;font-size:11px">'
+            + (chg >= 0 ? '▲+' : '▼') + chg.toFixed(2) + '%</span>';
+        }
+        badge.innerHTML = sym + ' ' + fmt(spot) + chgStr;
+      })
+      .catch(function() {});
+
+    renderStats(_allPlays);
+    renderFilters();
+    renderTable(_allPlays);
+  } catch(e) { document.getElementById('bt-tbody').innerHTML = `<tr><td colspan="8">${noData('No backtest data')}</td></tr>`; }
+});
+function renderStats(plays) {
+  const w = plays.filter(p=>p.outcome==='WIN').length;
+  const n = plays.filter(p=>p.outcome==='NEUTRAL').length;
+  const s = plays.filter(p=>p.outcome==='SCRATCH').length;
+  const l = plays.filter(p=>p.outcome==='LOSS').length;
+  const pnls = plays.map(p=>p.pnl_pct||0).filter(v=>!isNaN(v));
+  const avg = pnls.length ? (pnls.reduce((a,b)=>a+b,0)/pnls.length) : 0;
+  const wn = plays.length ? ((w+n)/plays.length*100) : 0;
+  document.getElementById('bt-stats').innerHTML = `
+    <div class="stat-item"><div class="stat-label">W+N Rate</div><div class="stat-value" style="color:var(--green)">${wn.toFixed(1)}%</div></div>
+    <div class="stat-item"><div class="stat-label">Avg P&amp;L</div><div class="stat-value">${fmtPct(avg)}</div></div>
+    <div class="stat-item"><div class="stat-label">Plays</div><div class="stat-value">${plays.length}</div></div>
+    <div class="stat-item"><div class="stat-label">WIN</div><div class="stat-value pos">${w}</div></div>
+    <div class="stat-item"><div class="stat-label">NEUTRAL</div><div class="stat-value" style="color:var(--blue)">${n}</div></div>
+    <div class="stat-item"><div class="stat-label">SCRATCH</div><div class="stat-value" style="color:var(--text-muted)">${s}</div></div>
+    <div class="stat-item"><div class="stat-label">LOSS</div><div class="stat-value neg">${l}</div></div>`;
+}
+function renderFilters() {
+  const outcomes = ['ALL','WIN','NEUTRAL','SCRATCH','LOSS'];
+  document.getElementById('bt-filters').innerHTML = outcomes.map(o =>
+    `<button class="filter-btn${o===_filter?' active':''}" onclick="setFilter('${o}')">${o}</button>`
+  ).join('');
+}
+function setFilter(f) { _filter=f; renderFilters(); renderTable(_allPlays); }
+function renderTable(plays) {
+  const filtered = _filter==='ALL' ? plays : plays.filter(p=>p.outcome===_filter);
+  const sorted = [...filtered].sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+  document.getElementById('bt-tbody').innerHTML = sorted.slice(0,200).map(p => {
+    const oc = p.outcome||'';
+    const cls = {WIN:'win',NEUTRAL:'neutral',SCRATCH:'scratch',LOSS:'loss'}[oc]||'';
+    const dir = (p.direction||'').toLowerCase();
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:12px">${p.date||'—'}</td>
+      <td style="font-size:12px">${p.strategy||'—'}</td>
+      <td style="font-family:var(--mono)">${fmt(p.strike)}</td>
+      <td><span class="badge badge-${dir}">${p.direction||'—'}</span></td>
+      <td style="font-family:var(--mono)">₹${fmt(p.entry_price||0,1)}</td>
+      <td style="font-family:var(--mono)">₹${fmt(p.exit_price||0,1)}</td>
+      <td>${fmtPct(p.pnl_pct)}</td>
+      <td><span class="badge badge-${cls}">${oc}</span></td>
+    </tr>`;
+  }).join('') || `<tr><td colspan="8">${noData('No plays match filter')}</td></tr>`;
+}
+
+async function runBacktest() {
+  const btn = document.getElementById('bt-run-btn');
+  if (!btn) return;
+  btn.textContent = '⏳ Running…';
+  btn.disabled = true;
+  btn.style.color = 'var(--amber)';
+  try {
+    const data = Promise.reject(new Error('Backtest runs automatically via GitHub Actions daily'));
+    _allPlays = (data.plays || []).filter(p => p.outcome && p.outcome !== 'PENDING');
+    renderStats(_allPlays);
+    renderFilters();
+    renderTable(_allPlays);
+    btn.textContent = '✅ Done';
+    btn.style.color = 'var(--green)';
+    // Update timestamp
+    const ts = data.timestamp || data.run_date || '';
+    const tsEl = document.getElementById('bt-ts');
+    if (tsEl && ts) tsEl.textContent = 'Last run: ' + fmtTs(ts);
+  } catch(e) {
+    btn.textContent = '❌ Failed';
+    btn.style.color = 'var(--red)';
+  }
+  setTimeout(() => {
+    btn.textContent = '🔄 Re-run (120 days)';
+    btn.style.color = '';
+    btn.disabled = false;
+  }, 4000);
+}
+</script>
+</body></html>

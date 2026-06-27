@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F&O Universe — GEX</title>
+<link rel="stylesheet" href="./css/style.css">
+<style>
+.setup-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px; margin-top:12px; }
+.setup-card { background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:14px 16px; cursor:pointer; transition:border-color .15s; }
+.setup-card:hover { border-color:var(--amber); }
+.setup-card.sell { border-left:3px solid var(--amber); }
+.setup-card.buy  { border-left:3px solid var(--green); }
+.setup-sym  { font-size:15px; font-weight:700; font-family:var(--mono); }
+.setup-meta { font-size:12px; color:var(--text-muted); margin-top:4px; display:flex; gap:10px; flex-wrap:wrap; }
+.setup-levels { font-size:12px; margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+.setup-lv { display:flex; flex-direction:column; }
+.setup-lv .lbl { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; }
+.setup-lv .val { font-family:var(--mono); font-size:13px; font-weight:600; }
+.no-results { grid-column:1/-1; padding:40px; text-align:center; color:var(--text-muted); font-size:13px; }
+</style>
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<div class="page">
+  <div class="section-header">
+    <span class="section-title">&#128301; F&amp;O Universe Scanner</span>
+    <span id="univ-ts" style="font-size:12px;color:var(--text-muted)"></span>
+  </div>
+
+  <div class="filter-row" id="filter-play">
+    <span style="font-size:12px;color:var(--text-muted);align-self:center;margin-right:4px">Play:</span>
+    <button class="filter-btn active" onclick="setPlay('ALL')">All</button>
+    <button class="filter-btn" onclick="setPlay('CE')">CE (Bull)</button>
+    <button class="filter-btn" onclick="setPlay('PE')">PE (Bear)</button>
+    <button class="filter-btn" onclick="setPlay('STRADDLE')">Straddle</button>
+  </div>
+
+  <div class="filter-row" id="filter-side" style="margin-top:-4px">
+    <span style="font-size:12px;color:var(--text-muted);align-self:center;margin-right:4px">Dominant:</span>
+    <button class="filter-btn active" onclick="setSide('ALL')">All</button>
+    <button class="filter-btn" onclick="setSide('CALL')">&#128308; Call</button>
+    <button class="filter-btn" onclick="setSide('PUT')">&#128994; Put</button>
+    <button class="filter-btn" onclick="setSide('BALANCED')">&#9898; Balanced</button>
+  </div>
+
+  <div id="univ-count" style="font-size:13px;color:var(--text-muted);margin-bottom:4px"></div>
+  <div id="setup-grid" class="setup-grid">
+    <div class="skeleton skel-card"></div>
+    <div class="skeleton skel-card"></div>
+    <div class="skeleton skel-card"></div>
+    <div class="skeleton skel-card"></div>
+    <div class="skeleton skel-card"></div>
+    <div class="skeleton skel-card"></div>
+  </div>
+</div>
+
+<script src="./js/utils.js"></script><script src="./js/api.js"></script><script src="./js/nav.js"></script>
+<script>
+let _all = [], _play = 'ALL', _side = 'ALL';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  buildNav('universe');
+  try {
+    const data = await API.getUniverse();
+    // Actual shape: { generated_at, bhavcopy_date, vix, total_results, setups: [...] }
+    // Each setup: { symbol, spot, gamma_max, delta_neutral, gmax_distance_pct,
+    //               lot_size, total_oi, pc_ratio_at_gmax, dominant_side, suggested_play }
+    _all = data.setups || data.results || data.symbols || data.data || [];
+    if (!Array.isArray(_all)) _all = Object.values(_all);
+
+    const ts = data.generated_at || data.scan_date || data.timestamp || '';
+    if (ts) document.getElementById('univ-ts').textContent = 'Data: ' + fmtTs(ts);
+    renderGrid();
+  } catch(e) {
+    document.getElementById('setup-grid').innerHTML = '<div class="no-results">No universe data available — run the universe scanner to populate.</div>';
+  }
+});
+
+function setPlay(v) {
+  _play = v;
+  document.querySelectorAll('#filter-play .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.trim() === (v === 'ALL' ? 'All' : v === 'CE' ? 'CE (Bull)' : v === 'PE' ? 'PE (Bear)' : 'Straddle'));
+  });
+  renderGrid();
+}
+
+function setSide(v) {
+  _side = v;
+  document.querySelectorAll('#filter-side .filter-btn').forEach(b => {
+    const map = { ALL: 'All', CALL: 'Call', PUT: 'Put', BALANCED: 'Balanced' };
+    b.classList.toggle('active', b.textContent.replace(/[^\w]/g,'').trim() === (map[v] || v));
+  });
+  renderGrid();
+}
+
+function renderGrid() {
+  let filtered = _all;
+
+  if (_play !== 'ALL') {
+    filtered = filtered.filter(s => (s.suggested_play || '').toUpperCase() === _play);
+  }
+  if (_side !== 'ALL') {
+    filtered = filtered.filter(s => (s.dominant_side || '').toUpperCase() === _side);
+  }
+
+  document.getElementById('univ-count').textContent = filtered.length + ' of ' + _all.length + ' symbols';
+
+  const grid = document.getElementById('setup-grid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results">No setups match current filters</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.slice(0, 120).map(s => {
+    const sym      = s.symbol || '?';
+    const spot     = s.spot || 0;
+    const gmax     = s.gamma_max;
+    const dn       = s.delta_neutral;
+    const dist     = s.gmax_distance_pct;
+    const play     = (s.suggested_play || '').toUpperCase();
+    const side     = (s.dominant_side || '').toUpperCase();
+    const pcRatio  = s.pc_ratio_at_gmax;
+
+    // Direction class: PE = bearish (sell-biased), CE = bullish (buy-biased)
+    const dirClass = play === 'PE' ? 'sell' : play === 'CE' ? 'buy' : '';
+    const badge    = play === 'PE'
+      ? '<span class="badge badge-sell">&#8681; PE</span>'
+      : play === 'CE'
+        ? '<span class="badge badge-buy">&#8679; CE</span>'
+        : play === 'STRADDLE'
+          ? '<span class="badge" style="background:#444;color:#ccc">&#8597; STR</span>'
+          : '';
+
+    const sideColor = side === 'CALL' ? 'var(--green)' : side === 'PUT' ? 'var(--amber)' : 'var(--text-muted)';
+    const distStr   = dist != null ? (dist >= 0 ? '+' : '') + dist.toFixed(2) + '%' : '—';
+
+    return '<div class="setup-card ' + dirClass + '" onclick="loadSymDetail(\'' + sym + '\')" style="cursor:pointer">'
+      + '<div style="display:flex;align-items:center;justify-content:space-between">'
+      +   '<span class="setup-sym">' + sym + '</span>'
+      +   badge
+      + '</div>'
+      + '<div class="setup-meta">'
+      +   '<span>Spot <strong style="color:var(--text-primary);font-family:var(--mono)">' + fmt(spot) + '</strong></span>'
+      +   '<span style="color:' + sideColor + '">' + (side || '—') + '</span>'
+      + '</div>'
+      + '<div class="setup-levels">'
+      +   '<div class="setup-lv"><span class="lbl" style="color:var(--level-gmax)">GMax</span><span class="val">' + (fmt(gmax) || '—') + '</span></div>'
+      +   '<div class="setup-lv"><span class="lbl" style="color:var(--level-dn)">DN</span><span class="val">' + (fmt(dn) || '—') + '</span></div>'
+      +   '<div class="setup-lv"><span class="lbl">Dist</span><span class="val">' + distStr + '</span></div>'
+      +   '<div class="setup-lv"><span class="lbl">P/C</span><span class="val">' + (pcRatio != null ? pcRatio.toFixed(2) : '—') + '</span></div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+</script>
+
+<style>
+.sym-detail-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,.65); z-index:100; backdrop-filter:blur(2px);
+}
+.sym-detail-panel {
+  position:absolute; right:0; top:0; bottom:0; width:min(500px,100vw);
+  background:var(--bg-card); border-left:1px solid var(--border);
+  overflow-y:auto; padding:20px 22px; display:flex; flex-direction:column; gap:12px;
+}
+.sym-detail-header { display:flex; justify-content:space-between; align-items:center; }
+.sym-detail-close  {
+  background:none; border:1px solid var(--border); color:var(--text-muted);
+  padding:4px 10px; border-radius:6px; cursor:pointer; font-size:18px; line-height:1;
+}
+.sym-play-card {
+  background:var(--bg-input); border:1px solid var(--border);
+  border-radius:8px; padding:12px 14px; border-left:3px solid var(--amber);
+  margin-bottom:8px;
+}
+.sym-play-card.buy { border-left-color:var(--green); }
+.sym-eli5 {
+  background:rgba(88,166,255,.07); border:1px solid rgba(88,166,255,.2);
+  border-radius:6px; padding:10px 12px; font-size:12px; color:var(--text-secondary);
+  margin-top:8px;
+}
+.sym-eli5-lbl {
+  font-size:10px; color:var(--blue); text-transform:uppercase;
+  letter-spacing:.5px; font-weight:700; margin-bottom:4px;
+}
+.sym-meta-row {
+  display:flex; flex-wrap:wrap; gap:10px; font-size:12px; color:var(--text-muted);
+  padding:8px 0; border-bottom:1px solid var(--border); margin-bottom:4px;
+}
+.sym-meta-row strong { color:var(--text-primary); font-family:var(--mono); }
+</style>
+
+<!-- Symbol detail slide-in panel -->
+<div class="sym-detail-overlay" id="sym-overlay"
+     onclick="if(event.target===this)closeSymDetail()">
+  <div class="sym-detail-panel" id="sym-panel">
+    <div class="sym-detail-header">
+      <span id="sym-detail-title" style="font-size:20px;font-weight:800"></span>
+      <button class="sym-detail-close" onclick="closeSymDetail()">✕</button>
+    </div>
+    <div class="sym-meta-row" id="sym-detail-meta">Loading…</div>
+    <div id="sym-detail-plays"></div>
+  </div>
+</div>
+
+<script>
+function closeSymDetail() {
+  document.getElementById('sym-overlay').style.display = 'none';
+}
+
+function _eli5Short(p, sym) {
+  var s      = sym || 'the stock';
+  var strike = p.strike || 0;
+  var ltp    = p.ltp || p.approx_ltp || 0;
+  var otype  = (p.option_type || 'CE').toUpperCase();
+  var above  = otype === 'CE' ? 'below ' : 'above ';
+  if ((p.direction || 'SELL') === 'SELL') {
+    return 'Sell ' + otype + ' ' + fmt(strike)
+      + ' at Rs.' + fmt(ltp, 0)
+      + ' — keep the premium if ' + s + ' stays ' + above + fmt(strike) + ' at expiry.';
+  }
+  return 'Buy ' + otype + ' ' + fmt(strike)
+    + ' at Rs.' + fmt(ltp, 0)
+    + ' — profit if ' + s + ' breaks '
+    + (otype === 'CE' ? 'above ' : 'below ') + fmt(strike) + '.';
+}
+
+async function loadSymDetail(sym) {
+  var overlay  = document.getElementById('sym-overlay');
+  var titleEl  = document.getElementById('sym-detail-title');
+  var metaEl   = document.getElementById('sym-detail-meta');
+  var playsEl  = document.getElementById('sym-detail-plays');
+
+  titleEl.textContent = sym;
+  metaEl.innerHTML    = 'Loading…';
+  playsEl.innerHTML   = '';
+  overlay.style.display = 'block';
+
+  var scan = null;
+  try { scan = await fetch('/api/scan/' + sym).then(function(r){ return r.ok ? r.json() : null; }); }
+  catch(e) {}
+
+  if (!scan || !scan.spot) {
+    metaEl.innerHTML = '<span style="color:var(--amber)">⏳ Scanning <strong>' + sym + '</strong>... (30-60s)</span>';
+    playsEl.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:12px 0">Running GEX scan — please wait…</div>';
+    try {
+      var r2 = await fetch('/api/scan/' + sym + '/refresh', {method:'POST'});
+      scan = r2.ok ? await r2.json() : null;
+    } catch(e2) { scan = null; }
+    if (!scan || !scan.spot) {
+      metaEl.innerHTML = '<span style="color:var(--red)">❌ Scan failed for <strong>' + sym + '</strong>. NSE data may be unavailable.</span>';
+      playsEl.innerHTML = '';
+      return;
+    }
+  }
+
+  var spot  = scan.spot || 0;
+  var kl    = scan.key_levels || {};
+  var gmax  = kl.gamma_max  || scan.gamma_max  || 0;
+  var dn    = kl.delta_neutral || scan.delta_neutral || 0;
+  var dist  = scan.gmax_distance_pct;
+  var bias  = scan.market_bias || 'NEUTRAL';
+  var vix   = scan.vix;
+  var ts    = scan.timestamp ? fmtTs(scan.timestamp) : '';
+  var regime = scan.regime || 'NORMAL';
+  var biasCol = bias === 'BULLISH' ? 'var(--green)' : bias === 'BEARISH' ? 'var(--red)' : 'var(--text-muted)';
+
+  var distStr = dist != null ? (dist >= 0 ? '+' : '') + Number(dist).toFixed(2) + '%' : '—';
+
+  metaEl.innerHTML = [
+    'Spot <strong>' + fmt(spot) + '</strong>',
+    gmax  ? 'GMax <strong style="color:var(--level-gmax)">' + fmt(gmax) + '</strong>' : '',
+    dn    ? 'DN <strong style="color:var(--level-dn)">'   + fmt(dn)   + '</strong>' : '',
+    dist != null ? 'Dist <strong>' + distStr + '</strong>' : '',
+    vix   ? 'VIX <strong>' + Number(vix).toFixed(1) + '</strong>' : '',
+    'Bias <strong style="color:' + biasCol + '">' + bias + '</strong>',
+    ts    ? '<span style="color:var(--text-muted);font-size:11px">Data: ' + ts + '</span>' : '',
+  ].filter(Boolean).join(' &nbsp;·&nbsp; ');
+
+  var plays = (scan.gamma_max_plays || []).concat(scan.delta_neutral_plays || []);
+
+  if (!plays.length) {
+    var reason = scan.gmax_skip_reason || 'GMax is outside the actionable zone today';
+    playsEl.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:12px 0;line-height:1.6">'
+      + '⚠️ No plays for <strong>' + sym + '</strong> today.<br>'
+      + '<span style="font-size:12px">' + reason + '</span></div>';
+    return;
+  }
+
+  var html = '';
+  plays.forEach(function(p) {
+    var isSell = (p.direction || 'SELL') === 'SELL';
+    var conv   = (p.conviction || 'MEDIUM').toUpperCase();
+    var convCol = conv === 'HIGH' ? 'var(--green)' : conv === 'LOW' ? 'var(--text-muted)' : 'var(--amber)';
+    var e5     = _eli5Short(p, sym);
+    var expiry = p.expiry || '';
+    var ltp    = p.ltp || p.approx_ltp || 0;
+
+    html += '<div class="sym-play-card' + (isSell ? '' : ' buy') + '">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'
+      +   '<span style="font-weight:700;font-size:15px">'
+      +     '<span class="badge badge-' + (isSell ? 'sell' : 'buy') + '">'
+      +       (p.direction || 'SELL')
+      +     '</span> '
+      +     (p.option_type || 'CE') + ' ' + fmt(p.strike)
+      +   '</span>'
+      +   '<span style="color:' + convCol + ';font-size:12px">' + conv + '</span>'
+      + '</div>'
+      + '<div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">'
+      +   (p.strategy || '')
+      +   (ltp ? ' &nbsp;·&nbsp; Rs.' + fmt(ltp, 0) + ' premium' : '')
+      +   (expiry ? ' &nbsp;·&nbsp; Exp ' + expiry : '')
+      + '</div>'
+      + '<div class="sym-eli5">'
+      +   '<div class="sym-eli5-lbl">Plain English</div>'
+      +   e5
+      + '</div>'
+      + (p.rationale ? '<div style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">'
+          + p.rationale.slice(0, 180) + (p.rationale.length > 180 ? '…' : '') + '</div>' : '')
+      + '</div>';
+  });
+
+  // "Load in Dashboard" button
+  html += '<button onclick="localStorage.setItem(\'gex_ticker\', \''+sym+'\');window.location.href=\'/\'" '
+    + 'style="width:100%;margin-top:4px;padding:11px;background:var(--blue);color:#fff;'
+    + 'border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px">'
+    + '📊 Load ' + sym + ' in Dashboard</button>';
+
+  playsEl.innerHTML = html;
+}
+</script>
+</body>
+</html>

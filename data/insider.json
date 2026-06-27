@@ -1,0 +1,1289 @@
+{
+  "date": "2026-06-27",
+  "bulk_deals": [
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ABINFRA",
+      "client": "ARIHANT CAPITAL MARKETS LIMITED",
+      "side": "BUY",
+      "qty": 3838430,
+      "price": 11.95
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "AGIIL",
+      "client": "ARIHANT CAPITAL MARKETS LIMITED",
+      "side": "BUY",
+      "qty": 1124577,
+      "price": 365.68
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ATALREAL",
+      "client": "ALTIZEN VENTURES LLP",
+      "side": "BUY",
+      "qty": 1288539,
+      "price": 30.88
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ATALREAL",
+      "client": "VISHAL MAHESH WAGHELA",
+      "side": "BUY",
+      "qty": 1595000,
+      "price": 30.99
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "AVIENCE",
+      "client": "NEO APEX SHARE BROKING SERVICES LLP",
+      "side": "BUY",
+      "qty": 50400,
+      "price": 414.95
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "AVIENCE",
+      "client": "GREEN PEAKS ENTERPRISES LLP",
+      "side": "BUY",
+      "qty": 48600,
+      "price": 414.95
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "AVIENCE",
+      "client": "NIRAJ RAJNIKANT SHAH",
+      "side": "BUY",
+      "qty": 98400,
+      "price": 395.2
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "AVIENCE",
+      "client": "KIFS  ENTERPRISE",
+      "side": "BUY",
+      "qty": 30000,
+      "price": 395.2
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "HDFC MUTUAL FUND",
+      "side": "BUY",
+      "qty": 809063,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "INVESCO MUTUAL FUND",
+      "side": "BUY",
+      "qty": 2093917,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "BNP PARIBAS FINANCIAL MARKETS",
+      "side": "BUY",
+      "qty": 970874,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "MALABAR INDIA FUND LIMITED",
+      "side": "BUY",
+      "qty": 809062,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EASEMYTRIP",
+      "client": "PARNIT VENTURES PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 18838070,
+      "price": 7.38
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMSLIMITED",
+      "client": "HRTI PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 285714,
+      "price": 422.6
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "GCSL",
+      "client": "MANSUKH SECURITIES & FINANCE LIMITED",
+      "side": "BUY",
+      "qty": 189227,
+      "price": 413.12
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "KAYNES",
+      "client": "GRAVITON RESEARCH CAPITAL LLP",
+      "side": "BUY",
+      "qty": 434054,
+      "price": 3304.3
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LEMERITE",
+      "client": "SAHASTRAA ADVISORS PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 805590,
+      "price": 24.2
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FMRC FIDELITY ADVISOR INTERNATIONAL CAPITAL APPRECIATION FUND",
+      "side": "BUY",
+      "qty": 13264600,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MADHUSUDAN",
+      "client": "VSPARTANS CONSULTANTS PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 99000,
+      "price": 209.17
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MANCREDIT",
+      "client": "BULLPULSE MARKETEDGE PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 108688,
+      "price": 225.95
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MARKOLINES",
+      "client": "VISTAAR TRADING SERVICE PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 147712,
+      "price": 175.26
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MARKOLINES",
+      "client": "HI KLASS TRADING & INVESTMENT LIMITED",
+      "side": "BUY",
+      "qty": 147559,
+      "price": 174.88
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MHLXMIRU",
+      "client": "NEO APEX VENTURE LLP",
+      "side": "BUY",
+      "qty": 198,
+      "price": 122.8
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MOTISONS",
+      "client": "ARIHANT CAPITAL MARKETS LIMITED",
+      "side": "BUY",
+      "qty": 17283318,
+      "price": 14.2
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "MOTISONS",
+      "client": "HRTI PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 5844913,
+      "price": 14.29
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "NARMADA",
+      "client": "SACHIN GOVINDLAL MODI",
+      "side": "BUY",
+      "qty": 298342,
+      "price": 42.23
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "NRVANDANA",
+      "client": "BULLPULSE MARKETEDGE PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 144000,
+      "price": 69.21
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "TWO ROADS TRADING PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 389944,
+      "price": 297.96
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 596022,
+      "price": 296.69
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 272643,
+      "price": 300.05
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "VINSUL MAKARDI LTD",
+      "side": "BUY",
+      "qty": 174657,
+      "price": 297.95
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "MICROCURVES TRADING PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 423434,
+      "price": 300.04
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 252046,
+      "price": 296.48
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "QE SECURITIES LLP",
+      "side": "BUY",
+      "qty": 231561,
+      "price": 294.03
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "ONWARDTEC",
+      "client": "IRAGE BROKING SERVICES LLP",
+      "side": "BUY",
+      "qty": 139218,
+      "price": 299.87
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "PIXTRANS",
+      "client": "QE SECURITIES LLP",
+      "side": "BUY",
+      "qty": 72352,
+      "price": 1808.04
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "PIXTRANS",
+      "client": "MICROCURVES TRADING PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 111839,
+      "price": 1818.01
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "PIXTRANS",
+      "client": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 194722,
+      "price": 1807.25
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOIND",
+      "client": "IRAGE BROKING SERVICES LLP",
+      "side": "BUY",
+      "qty": 616566,
+      "price": 344.18
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOIND",
+      "client": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 732747,
+      "price": 344.32
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOIND",
+      "client": "QE SECURITIES LLP",
+      "side": "BUY",
+      "qty": 926686,
+      "price": 344.86
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOIND",
+      "client": "MICROCURVES TRADING PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 967393,
+      "price": 344.59
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOIND",
+      "client": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 855346,
+      "price": 341.1
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "JUNOMONETA FINSOL PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 697235,
+      "price": 707.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "MICROCURVES TRADING PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 1075438,
+      "price": 710.09
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 185597,
+      "price": 710.44
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 268586,
+      "price": 712.02
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 197736,
+      "price": 706.72
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "MUSIGMA SECURITIES",
+      "side": "BUY",
+      "qty": 328039,
+      "price": 707.25
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "RAMCOSYS",
+      "client": "NK SECURITIES RESEARCH PRIVATE LIMITED",
+      "side": "BUY",
+      "qty": 502146,
+      "price": 709.88
+    }
+  ],
+  "block_deals": [
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "BNP PARIBAS FINANCIAL MARKETS",
+      "side": "BUY",
+      "qty": 970874,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "MALABAR INDIA FUND LIMITED",
+      "side": "BUY",
+      "qty": 809062,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "HDFC MUTUAL FUND",
+      "side": "BUY",
+      "qty": 809063,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "INVESCO MUTUAL FUND",
+      "side": "BUY",
+      "qty": 2093917,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "AXIS MUTUAL FUND",
+      "side": "BUY",
+      "qty": 137590,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "GOLDMAN SACHS INVESTMENTS MAURITIUS I LIMITED",
+      "side": "BUY",
+      "qty": 137590,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "HDFC STANDARD LIFE INSURNACE",
+      "side": "BUY",
+      "qty": 157949,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "HSBC MUTUAL FUND",
+      "side": "BUY",
+      "qty": 137590,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "MORGAN STANLEY ASIA SINGAPORE PTE",
+      "side": "BUY",
+      "qty": 137590,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "ADITYA BIRLA SUN LIFE MUTUAL FUND",
+      "side": "BUY",
+      "qty": 261420,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "HDFC STANDARD LIFE INSURANCE COMPANY LTD",
+      "side": "BUY",
+      "qty": 556954,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "BNP PARIBAS FINANCIAL MARKETS",
+      "side": "BUY",
+      "qty": 137592,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "ALPHA ALTERNATIVES EQUITY ABSOLUTE RETURN FUND",
+      "side": "BUY",
+      "qty": 137593,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "AXIS MUTUAL FUND",
+      "side": "BUY",
+      "qty": 137591,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FIDELITY  INVESTMENT TRUST FIDELITY INTERNATIONAL CAPITAL APPRECIATION K6 FD",
+      "side": "BUY",
+      "qty": 1710100,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "VIP INTL CAP APP PORT",
+      "side": "BUY",
+      "qty": 720200,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "SUNAMERICA SERIES TRUST SA FIDELITY INSTITUTIONAL AM INTL GROWTH PORTFOLIO",
+      "side": "BUY",
+      "qty": 178300,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FIDELITY INSTITUTIONAL AM INTERNATIONAL CORE CIT",
+      "side": "BUY",
+      "qty": 894596,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FIDELITY RUTLAND SQUARE TRUST II:",
+      "side": "BUY",
+      "qty": 100800,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FMRC FIDELITY ADVISOR INTERNATIONAL CAPITAL APPRECIATION FUND",
+      "side": "BUY",
+      "qty": 13264600,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FRST II STRAT ADV FIDE INTERL FUND",
+      "side": "BUY",
+      "qty": 2857100,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "FIAM INTERNATIONAL CAPITAL APPRECIATION COMMINGLED POOL",
+      "side": "BUY",
+      "qty": 155600,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "BANSALWIRE",
+      "client": "MRINAAL MITTAL",
+      "side": "SELL",
+      "qty": 4682916,
+      "price": 309.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "BC INVESTMENTS IV LIMITED",
+      "side": "SELL",
+      "qty": 969729,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "EMCURE",
+      "client": "BC INVESTMENTS IV LIMITED",
+      "side": "SELL",
+      "qty": 969730,
+      "price": 1817.0
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "HIGHTOWN CONSTRUCTIONS PRIVATE LIMITED",
+      "side": "SELL",
+      "qty": 17424032,
+      "price": 937.85
+    },
+    {
+      "date": "25-JUN-2026",
+      "symbol": "LODHA",
+      "client": "HOMECRAFT DEVELOPERS AND FARMS PRIVATE LIMITED",
+      "side": "SELL",
+      "qty": 2457264,
+      "price": 937.85
+    }
+  ],
+  "pit_disclosures": [],
+  "cross_reference": {
+    "ABINFRA": {
+      "bulk": {
+        "buy_qty": 3838430,
+        "sell_qty": 3995422,
+        "net_qty": -156992,
+        "buyers": [
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "sellers": [
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -156,992 net bought by ARIHANT CAPITAL MARKETS LIMITED; Bulk/block: 156,992 net sold"
+    },
+    "RAMCOIND": {
+      "bulk": {
+        "buy_qty": 4098738,
+        "sell_qty": 4024914,
+        "net_qty": 73824,
+        "buyers": [
+          "IRAGE BROKING SERVICES LLP",
+          "JUNOMONETA FINSOL PRIVATE LIMITED",
+          "QE SECURITIES LLP",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "NK SECURITIES RESEARCH PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "QE SECURITIES LLP",
+          "JUNOMONETA FINSOL PRIVATE LIMITED",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "IRAGE BROKING SERVICES LLP",
+          "NK SECURITIES RESEARCH PRIVATE LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 73,824 net bought by IRAGE BROKING SERVICES LLP, JUNOMONETA FINSOL PRIVATE LIMITED"
+    },
+    "NARMADA": {
+      "bulk": {
+        "buy_qty": 298342,
+        "sell_qty": 768191,
+        "net_qty": -469849,
+        "buyers": [
+          "SACHIN GOVINDLAL MODI"
+        ],
+        "sellers": [
+          "CHANAKYA OPPORTUNITIES FUND I",
+          "VISTA AXIS VCC-QUANT FUND",
+          "SACHIN GOVINDLAL MODI"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -469,849 net bought by SACHIN GOVINDLAL MODI; Bulk/block: 469,849 net sold"
+    },
+    "BANSALWIRE": {
+      "bulk": {
+        "buy_qty": 9365832,
+        "sell_qty": 9365832,
+        "net_qty": 0,
+        "buyers": [
+          "HDFC MUTUAL FUND",
+          "INVESCO MUTUAL FUND",
+          "BNP PARIBAS FINANCIAL MARKETS",
+          "MALABAR INDIA FUND LIMITED",
+          "BNP PARIBAS FINANCIAL MARKETS"
+        ],
+        "sellers": [
+          "MRINAAL MITTAL",
+          "MRINAAL MITTAL"
+        ],
+        "signal": "NEUTRAL"
+      },
+      "pit": null,
+      "insider_signal": "NEUTRAL",
+      "summary": "Bulk/block: 0 net bought by HDFC MUTUAL FUND, INVESCO MUTUAL FUND"
+    },
+    "MOTISONS": {
+      "bulk": {
+        "buy_qty": 23128231,
+        "sell_qty": 20915254,
+        "net_qty": 2212977,
+        "buyers": [
+          "ARIHANT CAPITAL MARKETS LIMITED",
+          "HRTI PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "HRTI PRIVATE LIMITED",
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 2,212,977 net bought by ARIHANT CAPITAL MARKETS LIMITED, HRTI PRIVATE LIMITED"
+    },
+    "GCSL": {
+      "bulk": {
+        "buy_qty": 189227,
+        "sell_qty": 129811,
+        "net_qty": 59416,
+        "buyers": [
+          "MANSUKH SECURITIES & FINANCE LIMITED"
+        ],
+        "sellers": [
+          "MANSUKH SECURITIES & FINANCE LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 59,416 net bought by MANSUKH SECURITIES & FINANCE LIMITED"
+    },
+    "EMCURE": {
+      "bulk": {
+        "buy_qty": 1939459,
+        "sell_qty": 3878918,
+        "net_qty": -1939459,
+        "buyers": [
+          "AXIS MUTUAL FUND",
+          "GOLDMAN SACHS INVESTMENTS MAURITIUS I LIMITED",
+          "HDFC STANDARD LIFE INSURNACE",
+          "HSBC MUTUAL FUND",
+          "MORGAN STANLEY ASIA SINGAPORE PTE"
+        ],
+        "sellers": [
+          "BC INVESTMENTS IV LIMITED",
+          "BC INVESTMENTS IV LIMITED",
+          "BC INVESTMENTS IV LIMITED",
+          "BC INVESTMENTS IV LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -1,939,459 net bought by AXIS MUTUAL FUND, GOLDMAN SACHS INVESTMENTS MAURITIUS I LIMITED; Bulk/block: 1,939,459 net sold"
+    },
+    "HONASA": {
+      "bulk": {
+        "buy_qty": 0,
+        "sell_qty": 4178384,
+        "net_qty": -4178384,
+        "buyers": [],
+        "sellers": [
+          "SOFINA VENTURES S.A."
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: 4,178,384 net sold"
+    },
+    "PIXTRANS": {
+      "bulk": {
+        "buy_qty": 378913,
+        "sell_qty": 378888,
+        "net_qty": 25,
+        "buyers": [
+          "QE SECURITIES LLP",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "NK SECURITIES RESEARCH PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "NK SECURITIES RESEARCH PRIVATE LIMITED",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "QE SECURITIES LLP"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 25 net bought by QE SECURITIES LLP, MICROCURVES TRADING PRIVATE LIMITED"
+    },
+    "URAVIDEF": {
+      "bulk": {
+        "buy_qty": 0,
+        "sell_qty": 153051,
+        "net_qty": -153051,
+        "buyers": [],
+        "sellers": [
+          "VINEY CORPORATION  LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: 153,051 net sold"
+    },
+    "ATALREAL": {
+      "bulk": {
+        "buy_qty": 2883539,
+        "sell_qty": 2124839,
+        "net_qty": 758700,
+        "buyers": [
+          "ALTIZEN VENTURES LLP",
+          "VISHAL MAHESH WAGHELA"
+        ],
+        "sellers": [
+          "VISHAL MAHESH WAGHELA",
+          "VISHAL MAHESH WAGHELA",
+          "ALTIZEN VENTURES LLP"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 758,700 net bought by ALTIZEN VENTURES LLP, VISHAL MAHESH WAGHELA"
+    },
+    "RELAXO": {
+      "bulk": {
+        "buy_qty": 1297812,
+        "sell_qty": 1297812,
+        "net_qty": 0,
+        "buyers": [
+          "MICROCURVES TRADING PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "MICROCURVES TRADING PRIVATE LIMITED"
+        ],
+        "signal": "NEUTRAL"
+      },
+      "pit": null,
+      "insider_signal": "NEUTRAL",
+      "summary": "Bulk/block: 0 net bought by MICROCURVES TRADING PRIVATE LIMITED"
+    },
+    "ROTO": {
+      "bulk": {
+        "buy_qty": 7144575,
+        "sell_qty": 6844914,
+        "net_qty": 299661,
+        "buyers": [
+          "JUNOMONETA FINSOL PRIVATE LIMITED",
+          "QE SECURITIES LLP",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "HRTI PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "HRTI PRIVATE LIMITED",
+          "QE SECURITIES LLP",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "JUNOMONETA FINSOL PRIVATE LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 299,661 net bought by JUNOMONETA FINSOL PRIVATE LIMITED, QE SECURITIES LLP"
+    },
+    "LODHA": {
+      "bulk": {
+        "buy_qty": 33145896,
+        "sell_qty": 37305328,
+        "net_qty": -4159432,
+        "buyers": [
+          "FMRC FIDELITY ADVISOR INTERNATIONAL CAPITAL APPRECIATION FUND",
+          "FIDELITY  INVESTMENT TRUST FIDELITY INTERNATIONAL CAPITAL APPRECIATION K6 FD",
+          "VIP INTL CAP APP PORT",
+          "SUNAMERICA SERIES TRUST SA FIDELITY INSTITUTIONAL AM INTL GROWTH PORTFOLIO",
+          "FIDELITY INSTITUTIONAL AM INTERNATIONAL CORE CIT"
+        ],
+        "sellers": [
+          "HIGHTOWN CONSTRUCTIONS PRIVATE LIMITED",
+          "HIGHTOWN CONSTRUCTIONS PRIVATE LIMITED",
+          "HOMECRAFT DEVELOPERS AND FARMS PRIVATE LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -4,159,432 net bought by FMRC FIDELITY ADVISOR INTERNATIONAL CAPITAL APPRECIATION FUND, FIDELITY  INVESTMENT TRUST FIDELITY INTERNATIONAL CAPITAL APPRECIATION K6 FD; Bulk/block: 4,159,432 net sold"
+    },
+    "EMSLIMITED": {
+      "bulk": {
+        "buy_qty": 285714,
+        "sell_qty": 317403,
+        "net_qty": -31689,
+        "buyers": [
+          "HRTI PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "HRTI PRIVATE LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -31,689 net bought by HRTI PRIVATE LIMITED; Bulk/block: 31,689 net sold"
+    },
+    "SHANTIGOLD": {
+      "bulk": {
+        "buy_qty": 2386039,
+        "sell_qty": 2331825,
+        "net_qty": 54214,
+        "buyers": [
+          "ARIHANT CAPITAL MARKETS LIMITED",
+          "HRTI PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "HRTI PRIVATE LIMITED",
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 54,214 net bought by ARIHANT CAPITAL MARKETS LIMITED, HRTI PRIVATE LIMITED"
+    },
+    "AVIENCE": {
+      "bulk": {
+        "buy_qty": 227400,
+        "sell_qty": 0,
+        "net_qty": 227400,
+        "buyers": [
+          "NEO APEX SHARE BROKING SERVICES LLP",
+          "GREEN PEAKS ENTERPRISES LLP",
+          "NIRAJ RAJNIKANT SHAH",
+          "KIFS  ENTERPRISE"
+        ],
+        "sellers": [],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 227,400 net bought by NEO APEX SHARE BROKING SERVICES LLP, GREEN PEAKS ENTERPRISES LLP"
+    },
+    "ONWARDTEC": {
+      "bulk": {
+        "buy_qty": 2479525,
+        "sell_qty": 2485922,
+        "net_qty": -6397,
+        "buyers": [
+          "TWO ROADS TRADING PRIVATE LIMITED",
+          "NK SECURITIES RESEARCH PRIVATE LIMITED",
+          "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+          "VINSUL MAKARDI LTD",
+          "MICROCURVES TRADING PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "VINSUL MAKARDI LTD",
+          "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+          "NK SECURITIES RESEARCH PRIVATE LIMITED",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "IRAGE BROKING SERVICES LLP"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -6,397 net bought by TWO ROADS TRADING PRIVATE LIMITED, NK SECURITIES RESEARCH PRIVATE LIMITED; Bulk/block: 6,397 net sold"
+    },
+    "LEMERITE": {
+      "bulk": {
+        "buy_qty": 805590,
+        "sell_qty": 805590,
+        "net_qty": 0,
+        "buyers": [
+          "SAHASTRAA ADVISORS PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "SAHASTRAA ADVISORS PRIVATE LIMITED"
+        ],
+        "signal": "NEUTRAL"
+      },
+      "pit": null,
+      "insider_signal": "NEUTRAL",
+      "summary": "Bulk/block: 0 net bought by SAHASTRAA ADVISORS PRIVATE LIMITED"
+    },
+    "RAMCOSYS": {
+      "bulk": {
+        "buy_qty": 5091265,
+        "sell_qty": 5146569,
+        "net_qty": -55304,
+        "buyers": [
+          "JUNOMONETA FINSOL PRIVATE LIMITED",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+          "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+          "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "JUMP TRADING FINANCIAL INDIA PRIVATE LIMITED",
+          "DIPAN MEHTA COMMODITIES PRIVATE LIMITED",
+          "ELIXIR WEALTH MANAGEMENT PRIVATE LIMITED",
+          "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+          "MUSIGMA SECURITIES"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -55,304 net bought by JUNOMONETA FINSOL PRIVATE LIMITED, MICROCURVES TRADING PRIVATE LIMITED; Bulk/block: 55,304 net sold"
+    },
+    "RATNAVEER": {
+      "bulk": {
+        "buy_qty": 2419272,
+        "sell_qty": 2498721,
+        "net_qty": -79449,
+        "buyers": [
+          "HRTI PRIVATE LIMITED",
+          "QE SECURITIES LLP",
+          "MATHISYS QUANTCAP LLP",
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "sellers": [
+          "HRTI PRIVATE LIMITED",
+          "QE SECURITIES LLP",
+          "MATHISYS QUANTCAP LLP",
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -79,449 net bought by HRTI PRIVATE LIMITED, QE SECURITIES LLP; Bulk/block: 79,449 net sold"
+    },
+    "MHLXMIRU": {
+      "bulk": {
+        "buy_qty": 198,
+        "sell_qty": 90304,
+        "net_qty": -90106,
+        "buyers": [
+          "NEO APEX VENTURE LLP"
+        ],
+        "sellers": [
+          "NEO APEX VENTURE LLP"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -90,106 net bought by NEO APEX VENTURE LLP; Bulk/block: 90,106 net sold"
+    },
+    "KAYNES": {
+      "bulk": {
+        "buy_qty": 434054,
+        "sell_qty": 434054,
+        "net_qty": 0,
+        "buyers": [
+          "GRAVITON RESEARCH CAPITAL LLP"
+        ],
+        "sellers": [
+          "GRAVITON RESEARCH CAPITAL LLP"
+        ],
+        "signal": "NEUTRAL"
+      },
+      "pit": null,
+      "insider_signal": "NEUTRAL",
+      "summary": "Bulk/block: 0 net bought by GRAVITON RESEARCH CAPITAL LLP"
+    },
+    "RBA": {
+      "bulk": {
+        "buy_qty": 5042812,
+        "sell_qty": 5937347,
+        "net_qty": -894535,
+        "buyers": [
+          "HRTI PRIVATE LIMITED",
+          "MONET SECURITIES PRIVATE LTD"
+        ],
+        "sellers": [
+          "HRTI PRIVATE LIMITED",
+          "UNITY ASSOCIATES"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -894,535 net bought by HRTI PRIVATE LIMITED, MONET SECURITIES PRIVATE LTD; Bulk/block: 894,535 net sold"
+    },
+    "EASEMYTRIP": {
+      "bulk": {
+        "buy_qty": 18838070,
+        "sell_qty": 18838069,
+        "net_qty": 1,
+        "buyers": [
+          "PARNIT VENTURES PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "PARNIT VENTURES PRIVATE LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 1 net bought by PARNIT VENTURES PRIVATE LIMITED"
+    },
+    "MARKOLINES": {
+      "bulk": {
+        "buy_qty": 295271,
+        "sell_qty": 210397,
+        "net_qty": 84874,
+        "buyers": [
+          "VISTAAR TRADING SERVICE PRIVATE LIMITED",
+          "HI KLASS TRADING & INVESTMENT LIMITED"
+        ],
+        "sellers": [
+          "VISTAAR TRADING SERVICE PRIVATE LIMITED",
+          "HI KLASS TRADING & INVESTMENT LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 84,874 net bought by VISTAAR TRADING SERVICE PRIVATE LIMITED, HI KLASS TRADING & INVESTMENT LIMITED"
+    },
+    "AGIIL": {
+      "bulk": {
+        "buy_qty": 1124577,
+        "sell_qty": 1179409,
+        "net_qty": -54832,
+        "buyers": [
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "sellers": [
+          "ARIHANT CAPITAL MARKETS LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -54,832 net bought by ARIHANT CAPITAL MARKETS LIMITED; Bulk/block: 54,832 net sold"
+    },
+    "SOMICONVEY": {
+      "bulk": {
+        "buy_qty": 193664,
+        "sell_qty": 246925,
+        "net_qty": -53261,
+        "buyers": [
+          "PRIYA MILAN SADARIYA",
+          "AMIT KUMAR JAIN",
+          "INDRA KIRAN VENTURES"
+        ],
+        "sellers": [
+          "AMIT KUMAR JAIN",
+          "INDRA KIRAN VENTURES",
+          "PRIYA MILAN SADARIYA"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -53,261 net bought by PRIYA MILAN SADARIYA, AMIT KUMAR JAIN; Bulk/block: 53,261 net sold"
+    },
+    "MADHUSUDAN": {
+      "bulk": {
+        "buy_qty": 99000,
+        "sell_qty": 0,
+        "net_qty": 99000,
+        "buyers": [
+          "VSPARTANS CONSULTANTS PRIVATE LIMITED"
+        ],
+        "sellers": [],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 99,000 net bought by VSPARTANS CONSULTANTS PRIVATE LIMITED"
+    },
+    "SHAH": {
+      "bulk": {
+        "buy_qty": 7489226,
+        "sell_qty": 6026263,
+        "net_qty": 1462963,
+        "buyers": [
+          "DHANJIT REAL TRADE LLP"
+        ],
+        "sellers": [
+          "DHANJIT REAL TRADE LLP"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 1,462,963 net bought by DHANJIT REAL TRADE LLP"
+    },
+    "MANCREDIT": {
+      "bulk": {
+        "buy_qty": 108688,
+        "sell_qty": 81754,
+        "net_qty": 26934,
+        "buyers": [
+          "BULLPULSE MARKETEDGE PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "BULLPULSE MARKETEDGE PRIVATE LIMITED"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 26,934 net bought by BULLPULSE MARKETEDGE PRIVATE LIMITED"
+    },
+    "NRVANDANA": {
+      "bulk": {
+        "buy_qty": 144000,
+        "sell_qty": 132000,
+        "net_qty": 12000,
+        "buyers": [
+          "BULLPULSE MARKETEDGE PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "PENTATEAM INVENTURE CAPITAL SCHEME I"
+        ],
+        "signal": "BUY"
+      },
+      "pit": null,
+      "insider_signal": "BUY",
+      "summary": "Bulk/block: 12,000 net bought by BULLPULSE MARKETEDGE PRIVATE LIMITED"
+    },
+    "SAKSOFT": {
+      "bulk": {
+        "buy_qty": 6116337,
+        "sell_qty": 6123631,
+        "net_qty": -7294,
+        "buyers": [
+          "NK SECURITIES RESEARCH PRIVATE LIMITED",
+          "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+          "BLITZQUANT RESEARCH LLP",
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "JUNOMONETA FINSOL PRIVATE LIMITED"
+        ],
+        "sellers": [
+          "MICROCURVES TRADING PRIVATE LIMITED",
+          "JUNOMONETA FINSOL PRIVATE LIMITED",
+          "SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED",
+          "QE SECURITIES LLP",
+          "NK SECURITIES RESEARCH PRIVATE LIMITED"
+        ],
+        "signal": "SELL"
+      },
+      "pit": null,
+      "insider_signal": "SELL",
+      "summary": "Bulk/block: -7,294 net bought by NK SECURITIES RESEARCH PRIVATE LIMITED, SILVERLEAF CAPITAL SERVICES PRIVATE LIMITED; Bulk/block: 7,294 net sold"
+    }
+  },
+  "top_buys": [
+    "RAMCOIND",
+    "MOTISONS",
+    "GCSL",
+    "PIXTRANS",
+    "ATALREAL",
+    "ROTO",
+    "SHANTIGOLD",
+    "AVIENCE",
+    "EASEMYTRIP",
+    "MARKOLINES"
+  ],
+  "top_sells": [
+    "ABINFRA",
+    "NARMADA",
+    "EMCURE",
+    "HONASA",
+    "URAVIDEF",
+    "LODHA",
+    "EMSLIMITED",
+    "ONWARDTEC",
+    "RAMCOSYS",
+    "RATNAVEER"
+  ]
+}

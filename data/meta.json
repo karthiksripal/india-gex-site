@@ -1,0 +1,23 @@
+{
+  "last_updated": "2026-06-27T10:43:40.109393+05:30",
+  "scan_date": "2026-06-27",
+  "symbols": {
+    "NIFTY": {
+      "spot": 24056.0,
+      "gamma_max": 24609.29,
+      "is_synthetic": false,
+      "ok": true
+    },
+    "BANKNIFTY": {
+      "spot": 58177.05,
+      "gamma_max": 59573.3,
+      "is_synthetic": false,
+      "ok": true
+    }
+  },
+  "universe": {
+    "stage1_total": 106,
+    "stage2_scanned": 20,
+    "plays_found": 26
+  }
+}

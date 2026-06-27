@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEX Dashboard — India Options</title>
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<div class="page">
+
+  <div id="synth-banner" style="display:none;background:rgba(245,158,11,0.12);border:1px solid #f59e0b;
+       border-radius:8px;padding:10px 16px;margin-bottom:14px;font-size:13px;color:#f59e0b">
+    Data is SYNTHETIC (demo) — NSE bhavcopy unavailable at scan time. Do not trade on this.
+  </div>
+
+  <div class="grid-3" style="margin-bottom:14px">
+    <div class="card">
+      <div class="card-label">Spot</div>
+      <div class="card-value" id="val-spot">—</div>
+      <div class="card-sub" id="sub-spot">Loading...</div>
+    </div>
+    <div class="card">
+      <div class="card-label">India VIX</div>
+      <div class="card-value" id="val-vix">—</div>
+      <div class="card-sub" id="sub-vix">Volatility index</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Last Scan</div>
+      <div class="card-value" style="font-size:16px" id="val-ts">—</div>
+      <div class="card-sub" id="sub-ts">Data freshness</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-bottom:8px">
+    <span class="section-title">GEX Key Levels</span>
+    <a href="./analysis.html" style="font-size:12px;color:var(--blue)">Full curve</a>
+  </div>
+  <div class="grid-3" style="margin-bottom:20px">
+    <div class="card card-gmax">
+      <div class="card-label">Gamma Max</div>
+      <div class="card-value" id="val-gmax">—</div>
+      <div class="card-sub" id="sub-gmax">Peak resistance</div>
+    </div>
+    <div class="card card-dn">
+      <div class="card-label">Delta Neutral</div>
+      <div class="card-value" id="val-dn">—</div>
+      <div class="card-sub" id="sub-dn">MM equilibrium</div>
+    </div>
+    <div class="card card-gn">
+      <div class="card-label">Gamma Neutral</div>
+      <div class="card-value" id="val-gn">—</div>
+      <div class="card-sub" id="sub-gn">Flip boundary</div>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-bottom:8px">
+    <span class="section-title">Today's Plays</span>
+    <span style="font-size:12px;color:var(--text-muted)">1% risk of capital per trade</span>
+  </div>
+  <div id="plays-container">
+    <div class="skeleton skel-card"></div>
+    <div class="skeleton skel-card"></div>
+  </div>
+
+  <div id="history-section" style="display:none;margin-top:20px">
+    <div class="section-header" style="margin-bottom:8px">
+      <span class="section-title">GMax Trend (30 days)</span>
+    </div>
+    <div class="card" style="padding:16px">
+      <canvas id="hist-chart" height="80"></canvas>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="./js/utils.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/nav.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  buildNav('index');
+  const sym = window.getActiveTicker ? window.getActiveTicker() : 'NIFTY';
+  let data;
+  try { data = await API.getScan(sym); }
+  catch(e) {
+    document.getElementById('plays-container').innerHTML =
+      noData('No scan data yet — Actions runs daily at 7:30 PM IST.');
+    return;
+  }
+
+  if (data.is_synthetic) document.getElementById('synth-banner').style.display = '';
+
+  const spot = data.spot || 0;
+  const pc   = data.prev_close;
+  document.getElementById('val-spot').textContent = fmt(spot);
+  if (pc && spot) {
+    const chg = (spot - pc) / pc * 100;
+    const col = chg >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('sub-spot').innerHTML =
+      '<span style="color:' + col + '">' + (chg >= 0 ? '+' : '') + chg.toFixed(2) + '% vs prev close</span>';
+  }
+
+  const vix = data.vix;
+  document.getElementById('val-vix').textContent = vix ? Number(vix).toFixed(1) : '—';
+  if (vix) {
+    const vixCol = vix < 15 ? 'var(--green)' : vix < 20 ? '#f59e0b' : 'var(--red)';
+    const vixLbl = vix < 15 ? 'Low vol' : vix < 20 ? 'Moderate vol' : 'High vol — caution';
+    document.getElementById('sub-vix').innerHTML = '<span style="color:' + vixCol + '">' + vixLbl + '</span>';
+  }
+
+  document.getElementById('val-ts').textContent = data.timestamp ? fmtTs(data.timestamp) : '—';
+  document.getElementById('sub-ts').textContent = sym + (data.is_synthetic ? ' · DEMO' : ' · LIVE');
+
+  const kl = data.key_levels || {};
+  document.getElementById('val-gmax').textContent = fmt(kl.gamma_max);
+  document.getElementById('sub-gmax').textContent = kl.gamma_max ? fmtDist(spot, kl.gamma_max) : 'No data';
+  document.getElementById('val-dn').textContent   = fmt(kl.delta_neutral);
+  document.getElementById('sub-dn').textContent   = kl.delta_neutral ? fmtDist(spot, kl.delta_neutral) : 'No data';
+  document.getElementById('val-gn').textContent   = kl.gamma_neutral ? fmt(kl.gamma_neutral) : '—';
+  document.getElementById('sub-gn').textContent   = kl.gamma_neutral ? fmtDist(spot, kl.gamma_neutral) : 'Not computed';
+
+  const allPlays = [...(data.gamma_max_plays||[]).slice(0,3), ...(data.delta_neutral_plays||[]).slice(0,3)];
+  if (!allPlays.length) {
+    document.getElementById('plays-container').innerHTML = noData('No plays generated.');
+  } else {
+    document.getElementById('plays-container').innerHTML =
+      '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">' +
+      allPlays.map(function(p) {
+        var ot = (p.option_type || p.direction || '').toUpperCase();
+        var borderCol = ot === 'CE' ? 'var(--green)' : '#f59e0b';
+        return '<div class="card" style="border-left:3px solid ' + borderCol + '">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">' +
+            '<div style="font-weight:700;font-size:13px">' + (p.strategy||'Play') + '</div>' +
+            '<span style="font-size:11px;font-family:var(--mono);color:' + borderCol + '">' + ot + '</span>' +
+          '</div>' +
+          '<div style="font-family:var(--mono);font-size:18px;font-weight:700">' + fmt(p.strike) + '</div>' +
+          '<div style="font-size:12px;color:var(--text-muted);margin-top:2px">' +
+            'LTP: ' + fmt(p.ltp||0,1) + ' &nbsp;|&nbsp; Expiry: ' + (p.expiry||'—') +
+          '</div>' +
+          '<div style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.5">' + (p.rationale||'') + '</div>' +
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  var history = (data.history||[]).filter(function(h){ return h.gamma_max; }).slice(0,20).reverse();
+  if (history.length >= 3) {
+    document.getElementById('history-section').style.display = '';
+    var ctx = document.getElementById('hist-chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: history.map(function(h){ return h.scan_date ? h.scan_date.slice(5) : ''; }),
+        datasets: [
+          { label: 'GMax', data: history.map(function(h){ return h.gamma_max; }),
+            borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.3, pointRadius: 3 },
+          { label: 'Spot', data: history.map(function(h){ return h.spot; }),
+            borderColor: 'rgba(255,255,255,0.35)', borderDash: [4,3], tension: 0.3, pointRadius: 0 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#8b949e', boxWidth: 12, font: { size: 11 } } },
+          tooltip: { callbacks: { label: function(c){ return c.dataset.label + ': ' + fmt(c.parsed.y); } } }
+        },
+        scales: {
+          x: { grid: { color: 'rgba(48,54,61,.4)' }, ticks: { color: '#8b949e', maxTicksLimit: 8, font: { size: 10 } } },
+          y: { grid: { color: 'rgba(48,54,61,.4)' }, ticks: { color: '#8b949e', font: { size: 10 }, callback: function(v){ return fmt(v); } } }
+        }
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>

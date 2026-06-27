@@ -1,0 +1,365 @@
+{
+  "timestamp": "2026-06-27T10:43:43.799579+05:30",
+  "symbol": "NIFTY",
+  "spot": 24056.0,
+  "vix": 13.05,
+  "risk_free_rate": 0.067,
+  "key_levels": {
+    "gamma_max": 24609.29,
+    "delta_neutral": 24056.0,
+    "gamma_flip": 24007.52,
+    "gamma_neutral": 24007.52,
+    "vanna_neutral": 21221.77,
+    "spot": 24056.0,
+    "expiry_weighting": "1/sqrt(T) normalised",
+    "level_stats": {
+      "at_gamma_max": {
+        "ce_oi": 40890590,
+        "pe_oi": 2952170,
+        "pc_ratio": 0.07,
+        "dominant_side": "CALL_HEAVY",
+        "total_oi": 43842760
+      },
+      "at_delta_neutral": {
+        "ce_oi": 45233665,
+        "pe_oi": 43894675,
+        "pc_ratio": 0.97,
+        "dominant_side": "BALANCED",
+        "total_oi": 89128340
+      }
+    },
+    "front_expiry_gmax": 24056.0
+  },
+  "gamma_max_plays": [],
+  "delta_neutral_plays": [
+    {
+      "strategy": "DN Short Straddle PE",
+      "direction": "SELL",
+      "strike": 23950,
+      "option_type": "PE",
+      "expiry": "14-Jul-2026",
+      "ltp": 179.0,
+      "lots": 1,
+      "max_risk_inr": 13425.0,
+      "dte": 16,
+      "approx_delta": 0.353,
+      "distance_to_level": 0.0,
+      "conviction": "LOW",
+      "premium_quality": "HIGH",
+      "rationale": "DN=24056 = current spot (dealers in equilibrium here). SELL PE 23950 (delta 0.35, DTE=16). WIN if NIFTY stays above 23950 at settlement."
+    }
+  ],
+  "gmax_distance_pct": 2.3,
+  "dn_distance_pct": 0.0,
+  "gmax_actionable": false,
+  "dn_actionable": true,
+  "regime": "NORMAL",
+  "prev_close": 24021.650390625,
+  "market_bias": "NEUTRAL",
+  "pin_trade": {
+    "available": false,
+    "reason": "Pin trade only valid on Thursday (Nifty expiry day)"
+  },
+  "gap_fade": {
+    "available": false,
+    "reason": "Gap too small (0.1%), need >0.8%"
+  },
+  "dn_strangle": {
+    "available": true,
+    "strategy": "Delta Neutral Strangle (SELL)",
+    "sell_ce_strike": 24300,
+    "sell_pe_strike": 23800,
+    "ce_ltp": 31.15,
+    "pe_ltp": 22.1,
+    "total_premium": 53.25,
+    "breakeven_up": 24353.25,
+    "breakeven_down": 23746.75,
+    "rationale": "Spot (24056) within 1% of Delta Neutral (24056) + VIX 13.1 \u2014 range-bound conditions. Sell strangle: CE 24300 @ Rs.31.15 + PE 23800 @ Rs.22.1. Collect Rs.53 total.",
+    "conviction": "HIGH"
+  },
+  "gamma_profile": [
+    {
+      "price": 23214.04,
+      "gex": -2437363227265189.0
+    },
+    {
+      "price": 23238.1,
+      "gex": -2472560303379765.5
+    },
+    {
+      "price": 23262.15,
+      "gex": -2506241766751882.0
+    },
+    {
+      "price": 23286.21,
+      "gex": -2538100195389996.0
+    },
+    {
+      "price": 23310.26,
+      "gex": -2567770351941908.0
+    },
+    {
+      "price": 23334.32,
+      "gex": -2594827750835849.0
+    },
+    {
+      "price": 23358.38,
+      "gex": -2618788895455117.0
+    },
+    {
+      "price": 23382.43,
+      "gex": -2639113182337050.0
+    },
+    {
+      "price": 23406.49,
+      "gex": -2655206427412297.5
+    },
+    {
+      "price": 23430.54,
+      "gex": -2666425942239917.0
+    },
+    {
+      "price": 23454.6,
+      "gex": -2672087075357773.0
+    },
+    {
+      "price": 23478.66,
+      "gex": -2671471132756896.0
+    },
+    {
+      "price": 23502.71,
+      "gex": -2663834598155735.0
+    },
+    {
+      "price": 23526.77,
+      "gex": -2648419583303231.5
+    },
+    {
+      "price": 23550.82,
+      "gex": -2624465445736379.5
+    },
+    {
+      "price": 23574.88,
+      "gex": -2591221511303238.0
+    },
+    {
+      "price": 23598.94,
+      "gex": -2547960827260935.5
+    },
+    {
+      "price": 23622.99,
+      "gex": -2493994846184432.5
+    },
+    {
+      "price": 23647.05,
+      "gex": -2428688900343473.0
+    },
+    {
+      "price": 24272.5,
+      "gex": 2419948853430498.0
+    },
+    {
+      "price": 24296.56,
+      "gex": 2588805003310935.0
+    },
+    {
+      "price": 24320.62,
+      "gex": 2744363382372138.5
+    },
+    {
+      "price": 24344.67,
+      "gex": 2886125362096377.5
+    },
+    {
+      "price": 24368.73,
+      "gex": 3013792445123524.5
+    },
+    {
+      "price": 24392.78,
+      "gex": 3127261655931677.0
+    },
+    {
+      "price": 24416.84,
+      "gex": 3226616421025458.0
+    },
+    {
+      "price": 24440.9,
+      "gex": 3312113376531112.0
+    },
+    {
+      "price": 24464.95,
+      "gex": 3384165656711624.5
+    },
+    {
+      "price": 24489.01,
+      "gex": 3443323308842171.0
+    },
+    {
+      "price": 24513.06,
+      "gex": 3490251545812733.0
+    },
+    {
+      "price": 24537.12,
+      "gex": 3525707586477589.0
+    },
+    {
+      "price": 24561.18,
+      "gex": 3550516844884824.0
+    },
+    {
+      "price": 24585.23,
+      "gex": 3565549213781274.0
+    },
+    {
+      "price": 24609.29,
+      "gex": 3571696146782456.0
+    },
+    {
+      "price": 24633.34,
+      "gex": 3569849179712954.0
+    },
+    {
+      "price": 24657.4,
+      "gex": 3560880447976586.5
+    },
+    {
+      "price": 24681.46,
+      "gex": 3545625657132390.0
+    },
+    {
+      "price": 24705.51,
+      "gex": 3524869852355115.0
+    },
+    {
+      "price": 24729.57,
+      "gex": 3499336213721017.0
+    },
+    {
+      "price": 24753.62,
+      "gex": 3469677983047476.0
+    },
+    {
+      "price": 24777.68,
+      "gex": 3436473509115411.0
+    },
+    {
+      "price": 24801.74,
+      "gex": 3400224286130691.0
+    },
+    {
+      "price": 24825.79,
+      "gex": 3361355759486820.0
+    },
+    {
+      "price": 24849.85,
+      "gex": 3320220586977540.0
+    },
+    {
+      "price": 24873.9,
+      "gex": 3277103975550057.5
+    },
+    {
+      "price": 24897.96,
+      "gex": 3232230665598906.0
+    },
+    {
+      "price": 24922.02,
+      "gex": 3185773107814799.0
+    },
+    {
+      "price": 24946.07,
+      "gex": 3137860371834747.5
+    },
+    {
+      "price": 24970.13,
+      "gex": 3088587340477380.5
+    },
+    {
+      "price": 24994.18,
+      "gex": 3038023776312577.0
+    },
+    {
+      "price": 25018.24,
+      "gex": 2986222895980941.5
+    },
+    {
+      "price": 25042.3,
+      "gex": 2933229148639850.0
+    },
+    {
+      "price": 25066.35,
+      "gex": 2879084964289881.0
+    },
+    {
+      "price": 25090.41,
+      "gex": 2823836311415949.0
+    },
+    {
+      "price": 25114.46,
+      "gex": 2767536977260175.0
+    },
+    {
+      "price": 25138.52,
+      "gex": 2710251554283531.5
+    },
+    {
+      "price": 25162.58,
+      "gex": 2652057179598781.0
+    },
+    {
+      "price": 25186.63,
+      "gex": 2593044127654311.0
+    },
+    {
+      "price": 25210.69,
+      "gex": 2533315398288931.0
+    },
+    {
+      "price": 25234.74,
+      "gex": 2472985471394946.5
+    }
+  ],
+  "front_expiry_gmax": 24056.0,
+  "strategies": {
+    "all": {
+      "iron_condor": {
+        "available": false,
+        "reason": "One or more premiums too low (<5) \u2014 near expiry or illiquid"
+      },
+      "broken_wing_butterfly": {
+        "available": false,
+        "reason": "Missing premium data"
+      },
+      "credit_spread": {
+        "available": false,
+        "reason": "Short call premium Rs.5.15 too low"
+      },
+      "calendar_spread": {
+        "available": false,
+        "reason": "GMax strike (24600) is 2.3% from spot \u2014 calendar works best when near ATM"
+      },
+      "expiry_butterfly": {
+        "available": false,
+        "reason": "Expiry butterfly only valid on Thursday (Nifty 0DTE expiry day)"
+      },
+      "iv_percentile_sell": {
+        "available": false,
+        "reason": "IV Rank 19 too low (need >40). Selling vol when cheap = bad edge."
+      }
+    },
+    "available": {},
+    "count": 0
+  },
+  "gmax_skip_reason": "GMax (24609) is 2.3% away \u2014 too far for same-day move",
+  "vix_actionable": true,
+  "is_synthetic": false,
+  "history": [
+    {
+      "scan_date": "2026-06-27",
+      "spot": 24056.0,
+      "gamma_max": 24609.29,
+      "delta_neutral": 24056.0,
+      "gamma_neutral": 24007.52
+    }
+  ]
+}

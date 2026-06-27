@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEX Analysis — India Options</title>
+<link rel="stylesheet" href="./css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav class="nav" id="nav"></nav>
+<div class="page">
+  <div class="section-header">
+    <span class="section-title">📊 GEX Curve Analysis</span>
+    <span id="profile-ts" style="font-size:12px;color:var(--text-muted)"></span>
+  </div>
+
+  <!-- Key levels row -->
+  <div id="levels-row" class="grid-3" style="margin-bottom:20px">
+    <div class="card card-gmax">
+      <div class="card-label">🟢 Gamma Max</div>
+      <div class="card-value" id="val-gmax">—</div>
+      <div class="card-sub" id="sub-gmax">Peak resistance</div>
+    </div>
+    <div class="card card-dn">
+      <div class="card-label">🔵 Delta Neutral</div>
+      <div class="card-value" id="val-dn">—</div>
+      <div class="card-sub" id="sub-dn">MM hedge equilibrium</div>
+    </div>
+    <div class="card card-gn">
+      <div class="card-label">🟠 Gamma Neutral</div>
+      <div class="card-value" id="val-gn">—</div>
+      <div class="card-sub" id="sub-gn">Stabilising boundary</div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card" style="padding:20px">
+    <div style="position:relative;height:400px">
+      <canvas id="gex-chart"></canvas>
+    </div>
+    <div style="display:flex;gap:20px;margin-top:14px;flex-wrap:wrap;font-size:12px;color:var(--text-muted)">
+      <span><span style="color:var(--level-gmax)">━</span> Gamma Max (resistance ceiling)</span>
+      <span><span style="color:var(--level-dn)">━</span> Delta Neutral (MM equilibrium)</span>
+      <span><span style="color:var(--level-gn)">━</span> Gamma Neutral (flip boundary)</span>
+      <span><span style="color:#fff;opacity:.6">╌</span> Spot price</span>
+    </div>
+  </div>
+
+  <!-- Explanation card -->
+  <div class="card" style="margin-top:14px">
+    <div class="section-title" style="margin-bottom:10px">How to read this chart</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px;color:var(--text-muted)">
+      <div><strong style="color:var(--level-gmax)">Gamma Max (GMax)</strong><br>
+        The strike with highest total gamma × OI. Market makers are long gamma here — they sell rallies and buy dips, acting as a magnet. Price tends to pin at or below GMax.</div>
+      <div><strong style="color:var(--level-dn)">Delta Neutral (DN)</strong><br>
+        Where total delta exposure is zero. Below DN, MMs are net long — they buy dips (supportive). Above DN, MMs are net short — they sell rallies (resistive).</div>
+      <div><strong style="color:var(--level-gn)">Gamma Neutral (GN)</strong><br>
+        Where total gamma flips sign. Above GN: MMs long gamma (dampening). Below GN: MMs short gamma (amplifying moves). Breakdowns accelerate below GN.</div>
+      <div><strong style="color:var(--text-primary)">Positive vs Negative bars</strong><br>
+        Green bars = MMs net long gamma at that strike (dampening). Red bars = MMs net short gamma (amplifying). A wall of green = strong suppression zone.</div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/utils.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/nav.js"></script>
+<script>
+let _chart = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  buildNav('analysis');
+  try {
+    const _sym = window.getActiveTicker ? window.getActiveTicker() : 'NIFTY';
+    const data = await API.getProfile(_sym);
+    renderLevels(data);
+    renderChart(data);
+    document.getElementById('profile-ts').textContent = data.timestamp ? 'Data: ' + fmtTs(data.timestamp) : '';
+  } catch(e) {
+    document.getElementById('gex-chart').parentElement.innerHTML =
+      noData('No profile data — click 🔄 to refresh scan');
+  }
+});
+
+function renderLevels(d) {
+  const spot = d.spot || 0;
+  document.getElementById('val-gmax').textContent = fmt(d.gamma_max);
+  document.getElementById('sub-gmax').textContent = d.gamma_max ? fmtDist(spot, d.gamma_max) : 'No data';
+  document.getElementById('val-dn').textContent = fmt(d.delta_neutral);
+  document.getElementById('sub-dn').textContent = d.delta_neutral ? fmtDist(spot, d.delta_neutral) : 'No data';
+  document.getElementById('val-gn').textContent = d.gamma_neutral ? fmt(d.gamma_neutral) : '—';
+  document.getElementById('sub-gn').textContent = d.gamma_neutral ? fmtDist(spot, d.gamma_neutral) : 'Not computed';
+}
+
+function renderChart(d) {
+  const profile = d.profile || [];
+  const spot    = d.spot;
+  const gmax    = d.gamma_max;
+  const dn      = d.delta_neutral;
+  const gn      = d.gamma_neutral;
+
+  if (!profile.length) {
+    // Fall back to synthetic visualisation using key levels only
+    renderLevelsOnlyChart(d);
+    return;
+  }
+
+  const labels = profile.map(p => p.price || p.strike || p[0]);
+  const values = profile.map(p => p.gex   || p.gamma_exposure || p[1] || 0);
+  const colors = values.map(v => v >= 0
+    ? 'rgba(34,197,94,0.7)' : 'rgba(248,81,73,0.7)');
+
+  const ctx = document.getElementById('gex-chart').getContext('2d');
+  if (_chart) _chart.destroy();
+
+  // Vertical line annotations via beforeDraw plugin
+  const levelLines = [
+    { value: gmax, color: '#22c55e', label: 'GMax' },
+    { value: dn,   color: '#3b82f6', label: 'DN' },
+    { value: gn,   color: '#f97316', label: 'GN' },
+    { value: spot, color: 'rgba(255,255,255,0.5)', label: 'Spot', dash: [6,4] },
+  ].filter(l => l.value);
+
+  const vlinePlugin = {
+    id: 'vlines',
+    beforeDraw(chart) {
+      const {ctx: c, scales: {x, y}} = chart;
+      levelLines.forEach(l => {
+        const xPos = x.getPixelForValue(l.value);
+        if (!xPos) return;
+        c.save();
+        c.beginPath();
+        c.moveTo(xPos, y.top);
+        c.lineTo(xPos, y.bottom);
+        c.strokeStyle = l.color;
+        c.lineWidth = l.dash ? 1 : 2;
+        if (l.dash) c.setLineDash(l.dash);
+        c.stroke();
+        c.fillStyle = l.color;
+        c.font = '11px system-ui';
+        c.fillText(l.label, xPos + 4, y.top + 14);
+        c.restore();
+      });
+    }
+  };
+
+  _chart = new Chart(ctx, {
+    type: 'bar',
+    data: { datasets: [{
+      data: values.map((v, i) => ({ x: parseFloat(labels[i]), y: v })),
+      backgroundColor: colors,
+      borderWidth: 0
+    }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: c => `GEX: ${c.parsed.y.toExponential(2)}`, title: c => `Strike: ${fmt(c[0].parsed.x)}` } } },
+      scales: {
+        x: {
+          type: 'linear',
+          grid: { color: 'rgba(48,54,61,.4)' },
+          ticks: {
+            color: '#8b949e',
+            maxTicksLimit: 12,
+            callback: v => fmt(v)
+          }
+        },
+        y: { grid: { color: 'rgba(48,54,61,.4)' }, ticks: { color: '#8b949e' } }
+      }
+    },
+    plugins: [vlinePlugin]
+  });
+}
+
+function renderLevelsOnlyChart(d) {
+  // No raw profile data — show a simple level diagram
+  const { spot, gamma_max: gmax, delta_neutral: dn, gamma_neutral: gn } = d;
+  const levels = [
+    { label: 'GMax', value: gmax, color: '#22c55e' },
+    { label: 'DN',   value: dn,   color: '#3b82f6' },
+    { label: 'GN',   value: gn,   color: '#f97316' },
+    { label: 'Spot', value: spot, color: '#fff'    },
+  ].filter(l => l.value).sort((a,b) => a.value - b.value);
+
+  const ctx = document.getElementById('gex-chart').getContext('2d');
+  if (_chart) _chart.destroy();
+  _chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: levels.map(l => l.label),
+      datasets: [{ data: levels.map(l => l.value), backgroundColor: levels.map(l => l.color + '99'), borderColor: levels.map(l => l.color), borderWidth: 2 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => fmt(c.parsed.x) } } },
+      scales: {
+        x: { grid: { color: 'rgba(48,54,61,.4)' }, ticks: { color: '#8b949e', callback: v => fmt(v) } },
+        y: { grid: { display: false }, ticks: { color: '#8b949e' } }
+      }
+    }
+  });
+  const note = document.createElement('p');
+  note.style.cssText = 'font-size:12px;color:var(--text-muted);margin-top:8px;text-align:center';
+  note.textContent = 'Full GEX curve not in cache — showing key levels only. Refresh scan to populate curve.';
+  document.getElementById('gex-chart').parentElement.appendChild(note);
+}
+</script>
+</body>
+</html>
